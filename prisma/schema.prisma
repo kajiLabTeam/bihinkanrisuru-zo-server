@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum EquipmentStatus {
+  AVAILABLE  
+  BORROWED    
+  LOST         
+}
+
+
+model User {
+  id                  String                @id @default(cuid())
+  name                String                @unique @db.VarChar(256)
+  createdAt           DateTime              @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt           DateTime              @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
+  deletedAt           DateTime?             @map("deleted_at") @db.Timestamp(0)
+  EquipmentBorrowLogs EquipmentBorrowLogs[]
+
+  @@map("users")
+}
+
+model Equipment {
+  id                  String                @id @default(cuid())
+  name                String                @unique @db.VarChar(256)
+  status              EquipmentStatus       @default(AVAILABLE)
+  purchaseDate        DateTime?             @map("purchase_date") @db.Timestamp(0)
+  createdAt           DateTime              @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt           DateTime              @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
+  deletedAt           DateTime              @map("deleted_at") @db.Timestamp(0)
+  EquipmentTag        EquipmentTag[]
+  EquipmentBorrowLogs EquipmentBorrowLogs[]
+
+  @@map("equipments")
+}
+
+model Tag {
+  id           String         @id @default(cuid())
+  name         String         @unique @db.VarChar(256)
+  createdAt    DateTime       @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt    DateTime       @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
+  deletedAt    DateTime?      @map("deleted_at") @db.Timestamp(0)
+  EquipmentTag EquipmentTag[]
+
+  @@map("tags")
+}
+
+model EquipmentBorrowLogs {
+  id         String    @id @default(cuid())
+  borrowedAt DateTime? @map("borrowed_at") @db.Timestamp(0)
+  returnedAt DateTime? @map("returned_at") @db.Timestamp(0)
+
+  equipmentId String @map("equipment_id")
+  userId      String @map("user_id")
+
+  Equipment Equipment @relation(fields: [equipmentId], references: [id])
+  User      User      @relation(fields: [userId], references: [id])
+
+  @@map("base_urls")
+}
+
+model EquipmentTag {
+  equipmentId String    @map("equipment_id")
+  tagId       String    @map("tag_id")
+  equipment   Equipment @relation(fields: [equipmentId], references: [id])
+  tag         Tag       @relation(fields: [tagId], references: [id])
+
+  @@id([equipmentId, tagId])
+  @@map("equipment_tags")
+}
