@@ -1,3 +1,6 @@
+-- CreateEnum
+CREATE TYPE "EquipmentStatus" AS ENUM ('AVAILABLE', 'BORROWED', 'LOST');
+
 -- CreateTable
 CREATE TABLE "users" (
     "id" TEXT NOT NULL,
@@ -13,7 +16,7 @@ CREATE TABLE "users" (
 CREATE TABLE "equipments" (
     "id" TEXT NOT NULL,
     "name" VARCHAR(256) NOT NULL,
-    "status" VARCHAR(256) NOT NULL DEFAULT 'available',
+    "status" "EquipmentStatus" NOT NULL DEFAULT 'AVAILABLE',
     "purchase_date" TIMESTAMP(0),
     "created_at" TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
