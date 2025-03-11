@@ -36,7 +36,9 @@ model Equipment {
   purchaseDate        DateTime?             @map("purchase_date") @db.Timestamp(0)
   createdAt           DateTime              @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt           DateTime              @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
-  deletedAt           DateTime              @map("deleted_at") @db.Timestamp(0)
+  deletedAt           DateTime?             @map("deleted_at") @db.Timestamp(0)
+
+  
   EquipmentTag        EquipmentTag[]
   EquipmentBorrowLogs EquipmentBorrowLogs[]
 
