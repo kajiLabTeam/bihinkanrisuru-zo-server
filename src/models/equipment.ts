@@ -46,11 +46,10 @@ export const createEquipment = async (
   return createdEquipment;
 }
 
-export const deleteEquipment = async (id: string): Promise<Equipment> => {
-  const deletedId = await prismaClient.equipment.delete(
+export const deleteEquipment = async (id: string) => {
+  await prismaClient.equipment.delete(
     {
       where: { id: id }
     }
   )
-  return deletedId;
 }
