@@ -15,7 +15,9 @@ CREATE TABLE "users" (
 -- CreateTable
 CREATE TABLE "equipments" (
     "id" TEXT NOT NULL,
+    "assetId" VARCHAR(256) NOT NULL,
     "name" VARCHAR(256) NOT NULL,
+    "place" VARCHAR(256) NOT NULL,
     "status" "EquipmentStatus" NOT NULL DEFAULT 'AVAILABLE',
     "purchase_date" TIMESTAMP(0),
     "created_at" TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -57,6 +59,9 @@ CREATE TABLE "equipment_tags" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_name_key" ON "users"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "equipments_assetId_key" ON "equipments"("assetId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "equipments_name_key" ON "equipments"("name");
