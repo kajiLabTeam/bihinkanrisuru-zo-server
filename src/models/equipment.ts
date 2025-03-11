@@ -8,49 +8,49 @@ export const getEquipments = async (): Promise<Equipment[]> => {
 
 export const editEquipment = async (
   id: string,
-  asset_id: string,
+  assetId: string,
   name: string,
-  purchase_date: Date,
+  purchaseDate: Date,
   place: string,
 ): Promise<Equipment> => {
-  const edited_equipment = await prismaClient.equipment.update({
+  const editedEquipment = await prismaClient.equipment.update({
     where: { id: id },
     data: {
-      assetId: asset_id,
+      assetId: assetId,
       name: name,
-      purchaseDate: purchase_date,
+      purchaseDate: purchaseDate,
       place: place,
     }
   });
-  return edited_equipment;
+  return editedEquipment;
 };
 
 export const createEquipment = async (
-  asset_id: string,
+  assetId: string,
   name: string,
   status: EquipmentStatus,
-  purchase_date: Date,
+  purchaseDate: Date,
   place: string,
 ): Promise<Equipment> => {
-  const created_equipment = await prismaClient.equipment.create(
+  const createdEquipment = await prismaClient.equipment.create(
     {
       data: {
-        assetId: asset_id,
+        assetId: assetId,
         name: name,
         status: status,
-        purchaseDate: purchase_date,
+        purchaseDate: purchaseDate,
         place: place,
       }
     }
   );
-  return created_equipment;
+  return createdEquipment;
 }
 
 export const deleteEquipment = async (id: string): Promise<Equipment> => {
-  const deleted_id = await prismaClient.equipment.delete(
+  const deletedId = await prismaClient.equipment.delete(
     {
       where: { id: id }
     }
   )
-  return deleted_id;
+  return deletedId;
 }
