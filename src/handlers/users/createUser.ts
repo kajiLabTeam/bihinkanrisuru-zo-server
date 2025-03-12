@@ -1,5 +1,4 @@
 import type { RouteHandler } from "@hono/zod-openapi";
-
 import type { Context } from "hono";
 import { insertUser } from "~/models/user";
 import type { createUserRoute } from "~/routers/users/route";
