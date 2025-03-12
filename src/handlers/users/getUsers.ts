@@ -3,7 +3,7 @@ import type { RouteHandler } from "@hono/zod-openapi";
 import type { Context } from "hono";
 import { getUsers } from "~/models/user";
 import type { getUsersRoute } from "~/routers/users/users";
-import { getUsersQuerySchema } from "~/schema/user";
+import { type GetUsersResponse, getUsersQuerySchema } from "~/schema/user";
 
 export const getUsersHandler: RouteHandler<typeof getUsersRoute> = async (
 	c: Context,
@@ -20,7 +20,7 @@ export const getUsersHandler: RouteHandler<typeof getUsersRoute> = async (
 			name: user.name,
 			status: user.status,
 		})),
-	};
+	} satisfies GetUsersResponse;
 
 	return c.json(response, 200);
 };
