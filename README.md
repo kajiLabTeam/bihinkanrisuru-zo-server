@@ -1,7 +1,5 @@
 # 備品管理する蔵バックエンド
 
-
-
 ## 実行方法
 
 ### 0. 準備
@@ -29,35 +27,39 @@ POSTGRES_PORT=5432
 DATABASE_URL=postgresql://user:password@localhost:5432/bihinkanrisuruzo-server?schema=public
 ```
 
-### 2. DBの立ち上げ・マイグレーション
+### 1. DB の立ち上げ・マイグレーション・デモデータ挿入
 
 ```shell
 make up
 ```
 
 ```shell
-yarn prisma migrate dev --name init
+yarn prisma:init
 ```
 
-### 3. サーバの起動
+```shell
+yarn seed
+```
+
+### 2. サーバの起動
 
 ```shell
 yarn dev
 ```
 
-### 4. サーバにアクセス
+### 3. サーバにアクセス
 
-`http://localhost:3000/ui`にアクセスすると API ドキュメントが閲覧できます
+`http://localhost:3000/docs`にアクセスすると API ドキュメントが閲覧できます
 
 ## その他
 
-### DBに接続したい場合
+### DB に接続したい場合
 
 ```shell
 make connect-db
 ```
 
-### prisma studioの起動
+### prisma studio の起動
 
 ```shell
 yarn prisma studio
