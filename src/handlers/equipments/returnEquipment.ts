@@ -1,7 +1,7 @@
 import type { RouteHandler } from "@hono/zod-openapi";
 import type { Context } from "hono";
 import { updateEquipmentById } from "~/models/equipment";
-import type { returnEquipmentRoute } from "~/routers/equipments/equipments";
+import type { returnEquipmentRoute } from "~/routers/equipments/route";
 import type { StatusMessageResponse } from "~/schema/common/message";
 import { returnEquipmentPathParamsSchema } from "~/schema/equipment";
 

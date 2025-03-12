@@ -1,6 +1,6 @@
 import { z } from "zod";
+import { unixTimestampSchema } from "./common/time";
 import { tagSchema } from "./tag";
-import { unixTimestampSchema } from "./time";
 
 export const getEquipmentsResponseSchema = z.object({
 	equipments: z.array(

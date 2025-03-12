@@ -8,7 +8,7 @@ import {
 	createUserRoute,
 	getUsersRoute,
 	rejectUserRoute,
-} from "./users";
+} from "./route";
 
 export const userRouter = new OpenAPIHono();
 
