@@ -43,36 +43,14 @@ export const insertEquipment = async (
 
 export const updateEquipmentById = async (
 	id: string,
-	assetId?: string,
-	name?: string,
-	place?: string,
-	status?: EquipmentStatus,
-	purchaseDate?: Date,
-): Promise<Equipment> => {
-	const updateData: {
+	updateData: {
 		assetId?: string;
 		name?: string;
 		place?: string;
 		status?: EquipmentStatus;
 		purchaseDate?: Date;
-	} = {};
-
-	if (assetId !== undefined) {
-		updateData.assetId = assetId;
-	}
-	if (name !== undefined) {
-		updateData.name = name;
-	}
-	if (place !== undefined) {
-		updateData.place = place;
-	}
-	if (status !== undefined) {
-		updateData.status = status;
-	}
-	if (purchaseDate !== undefined) {
-		updateData.purchaseDate = purchaseDate;
-	}
-
+	},
+): Promise<Equipment> => {
 	return await prismaClient.equipment.update({
 		where: {
 			id,

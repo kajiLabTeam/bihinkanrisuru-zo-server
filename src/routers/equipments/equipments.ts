@@ -1,13 +1,16 @@
 import { createRoute } from "@hono/zod-openapi";
 import {
+	borrowEquipmentPathParamsSchema,
 	createEquipmentRequestSchema,
 	createEquipmentResponseSchema,
 	getEquipmentsResponseSchema,
 	putEquipmentsRequestSchema,
 	putEquipmentsResponseSchema,
+	returnEquipmentPathParamsSchema,
 } from "~/schema/equipment";
 
-import { errorResponseSchema } from "~/schema/error";
+import { errorResponseSchema } from "~/schema/common/error";
+import { statusMessageResponseSchema } from "~/schema/common/message";
 
 export const getEquipmentsRoute = createRoute({
 	tags: ["equipments"],
@@ -98,6 +101,78 @@ export const putEquipmentsRoute = createRoute({
 			content: {
 				"application/json": {
 					schema: putEquipmentsResponseSchema,
+				},
+			},
+		},
+		400: {
+			description: "Bad Request",
+			content: {
+				"application/json": {
+					schema: errorResponseSchema,
+				},
+			},
+		},
+		500: {
+			description: "Internal Server Error",
+			content: {
+				"application/json": {
+					schema: errorResponseSchema,
+				},
+			},
+		},
+	},
+});
+
+export const borrowEquipmentRoute = createRoute({
+	tags: ["equipments"],
+	path: "/{equipmentId}/borrow",
+	method: "put",
+	description: "備品を借りる",
+	request: {
+		params: borrowEquipmentPathParamsSchema,
+	},
+	responses: {
+		201: {
+			description: "OK",
+			content: {
+				"application/json": {
+					schema: statusMessageResponseSchema,
+				},
+			},
+		},
+		400: {
+			description: "Bad Request",
+			content: {
+				"application/json": {
+					schema: errorResponseSchema,
+				},
+			},
+		},
+		500: {
+			description: "Internal Server Error",
+			content: {
+				"application/json": {
+					schema: errorResponseSchema,
+				},
+			},
+		},
+	},
+});
+
+export const returnEquipmentRoute = createRoute({
+	tags: ["equipments"],
+	path: "/{equipmentId}/return",
+	method: "put",
+	description: "備品を返す",
+	request: {
+		params: returnEquipmentPathParamsSchema,
+	},
+	responses: {
+		201: {
+			description: "OK",
+			content: {
+				"application/json": {
+					schema: statusMessageResponseSchema,
 				},
 			},
 		},

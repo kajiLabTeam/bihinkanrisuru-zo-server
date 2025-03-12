@@ -144,7 +144,7 @@ export const putEquipmentsResponseSchema = z.object({
 	}),
 	states: z.string().optional().openapi({
 		description: "機器の貸出状態 (貸出中など)",
-		example: "貸出中",
+		example: "AVAILABLE",
 	}),
 	purchase_date: unixTimestampSchema.optional().openapi({
 		description: "購入日 (UNIXタイムスタンプ)",
@@ -160,6 +160,20 @@ export const putEquipmentsResponseSchema = z.object({
 			{ id: "nw45xe6ksp4c8seq8u550lt8", name: "PC" },
 			{ id: "f7xx5gajjfbhprpj3eg39voh", name: "本" },
 		],
+	}),
+});
+
+export const borrowEquipmentPathParamsSchema = z.object({
+	id: z.string().openapi({
+		description: "DBに登録された機器ID",
+		example: "af5pgobariolcb44m5xim5zn",
+	}),
+});
+
+export const returnEquipmentPathParamsSchema = z.object({
+	id: z.string().openapi({
+		description: "DBに登録された機器ID",
+		example: "af5pgobariolcb44m5xim5zn",
 	}),
 });
 
@@ -179,6 +193,9 @@ export type CreateEquipmentResponse = z.infer<
 >;
 export type PutEquipmentsRequest = z.infer<typeof putEquipmentsRequestSchema>;
 export type PutEquipmentsResponse = z.infer<typeof putEquipmentsResponseSchema>;
+export type BorrowEquipmentPathParams = z.infer<
+	typeof borrowEquipmentPathParamsSchema
+>;
 export type DeleteEquipmentsResponse = z.infer<
 	typeof deleteEquipmentsResponseSchema
 >;
