@@ -16,9 +16,16 @@ enum EquipmentStatus {
   LOST
 }
 
+enum UserStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
 model User {
   id                  String                @id @default(cuid())
   name                String                @unique @db.VarChar(256)
+  status              UserStatus             @default(PENDING)
   createdAt           DateTime              @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt           DateTime              @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
   deletedAt           DateTime?             @map("deleted_at") @db.Timestamp(0)
