@@ -1,24 +1,30 @@
 import { serve } from "@hono/node-server";
-import { Hono } from "hono";
 import { cors } from "hono/cors";
 
 import { swaggerUI } from "@hono/swagger-ui";
-import type { CustomContext, CustomEnv } from "~/types/locals";
-import { router } from "./routers";
+import { OpenAPIHono } from "@hono/zod-openapi";
+import equipmentRouter from "./routers/equipments";
+import userRouter from "./routers/users";
 
 const port = 3000;
-const app = new Hono<CustomEnv>();
+const router = new OpenAPIHono();
 
-app.use(cors());
+router.use(cors());
 
-app.route("/", router);
-app.get("/ui", swaggerUI({ url: "/doc" }));
+router.route("/users", userRouter);
+router.route("/equipments", equipmentRouter);
 
-app.onError((_, c: CustomContext) => {
-	return c.text("Internal Server Error", 500);
+router.doc("/specification", {
+	openapi: "3.0.0",
+	info: {
+		version: "1.0.0",
+		title: "備品管理する蔵API",
+	},
 });
 
+router.get("/docs", swaggerUI({ url: "/specification" }));
+
 serve({
-	fetch: app.fetch,
+	fetch: router.fetch,
 	port,
 });
