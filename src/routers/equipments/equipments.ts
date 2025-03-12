@@ -10,6 +10,7 @@ import {
 import { errorResponseSchema } from "~/schema/error";
 
 export const getEquipmentsRoute = createRoute({
+	tags: ["equipments"],
 	path: "/",
 	method: "get",
 	description: "備品一覧を取得 ",
@@ -34,6 +35,7 @@ export const getEquipmentsRoute = createRoute({
 });
 
 export const createEquipmentRoute = createRoute({
+	tags: ["equipments"],
 	path: "/",
 	method: "post",
 	description: "備品登録",
@@ -76,6 +78,7 @@ export const createEquipmentRoute = createRoute({
 });
 
 export const putEquipmentsRoute = createRoute({
+	tags: ["equipments"],
 	path: "/{equipmentId}",
 	method: "put",
 	description: "備品編集",
@@ -118,6 +121,7 @@ export const putEquipmentsRoute = createRoute({
 });
 
 export const deleteEquipmentsRoute = createRoute({
+	tags: ["equipments"],
 	path: "/{equipmentId}",
 	method: "delete",
 	description: "備品削除",

@@ -14,6 +14,17 @@ router.doc("/specification", {
 		version: "1.0.0",
 		title: "備品管理する蔵API",
 	},
+	tags: [
+		{
+			name: "users",
+			description: "ユーザー情報を管理するAPI",
+
+		},
+		{
+			name: "equipments",
+			description: "備品情報を管理するAPI",
+		},
+	],
 });
 
 router.get("/docs", swaggerUI({ url: "/specification" }));

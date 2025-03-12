@@ -12,6 +12,7 @@ import {
 } from "~/schema/user";
 
 export const getUsersRoute = createRoute({
+	tags: ["users"],
 	path: "/",
 	method: "get",
 	description: "ユーザ一覧を取得 ",
@@ -39,6 +40,7 @@ export const getUsersRoute = createRoute({
 });
 
 export const createUserRoute = createRoute({
+	tags: ["users"],
 	path: "/",
 	method: "post",
 	description: "ユーザ登録",
@@ -81,6 +83,7 @@ export const createUserRoute = createRoute({
 });
 
 export const approveUserRoute = createRoute({
+	tags: ["users"],
 	path: "/{id}/approve",
 	method: "put",
 	description: "ユーザを承認",
@@ -116,6 +119,7 @@ export const approveUserRoute = createRoute({
 });
 
 export const rejectUserRoute = createRoute({
+	tags: ["users"],
 	path: "/{id}/reject",
 	method: "put",
 	description: "ユーザを拒否",
