@@ -1,6 +1,16 @@
 import { z } from "zod";
+import { getQuerySchema } from "./common/query";
 import { unixTimestampSchema } from "./common/time";
 import { tagSchema } from "./tag";
+
+export const getEquipmentsQuerySchema = getQuerySchema.merge(
+	z.object({
+		name: z.string().optional().openapi({
+			description: "備品名",
+			example: "ノートPC",
+		}),
+	}),
+);
 
 export const getEquipmentsResponseSchema = z.object({
 	equipments: z.array(
@@ -17,30 +27,51 @@ export const getEquipmentsResponseSchema = z.object({
 				description: "機器の名称",
 				example: "ノートPC",
 			}),
-			states: z.string().openapi({
+			status: z.string().openapi({
 				description: "機器の貸出状態 (貸出中など)",
-				example: "borrowed",
-			}),
-			borrower: z.string().openapi({
-				description: "貸出中の借用者",
-				example: "tada",
-			}),
-			borrowed_date: unixTimestampSchema.openapi({
-				description: "貸出日",
-				example: 1633824000000,
-			}),
-			registration_date: unixTimestampSchema.openapi({
-				description: "登録日",
-				example: 1633824000000,
-			}),
-			purchase_date: unixTimestampSchema.openapi({
-				description: "購入日",
-				example: 1633824000000,
+				example: "BORROWED",
 			}),
 			place: z.string().openapi({
 				description: "機器の保管場所",
 				example: "bookshelf-4",
 			}),
+			registration_at: unixTimestampSchema.openapi({
+				description: "登録日",
+				example: 1633824000000,
+			}),
+			purchase_at: unixTimestampSchema.openapi({
+				description: "購入日",
+				example: 1633824000000,
+			}),
+			borrower: z
+				.object({
+					id: z.string().openapi({
+						description: "学生証のバーコードから読み取れるユーザーID",
+						example: "20k23075",
+					}),
+					name: z.string().openapi({
+						description: "ユーザー名",
+						example: "tada",
+					}),
+					status: z.string().optional().openapi({
+						description: "ステータス",
+						example: "APPROVED",
+					}),
+					borrowed_at: unixTimestampSchema.openapi({
+						description: "借りた日時",
+						example: 1633824000000,
+					}),
+				})
+				.nullable()
+				.openapi({
+					description: "貸出中の借用者",
+					example: {
+						id: "20k23075",
+						name: "tada",
+						status: "APPROVED",
+						borrowed_at: 1633824000000,
+					},
+				}),
 			tags: z.array(tagSchema).openapi({
 				description: "機器のタグ一覧",
 				example: [
@@ -115,7 +146,7 @@ export const putEquipmentsRequestSchema = z.object({
 		description: "機器の名称",
 		example: "ノートPC",
 	}),
-	states: z.string().optional().openapi({
+	status: z.string().optional().openapi({
 		description: "機器の貸出状態 (貸出中など)",
 		example: "貸出中",
 	}),
@@ -142,7 +173,7 @@ export const putEquipmentsResponseSchema = z.object({
 		description: "機器の名称",
 		example: "ノートPC",
 	}),
-	states: z.string().optional().openapi({
+	status: z.string().optional().openapi({
 		description: "機器の貸出状態 (貸出中など)",
 		example: "AVAILABLE",
 	}),
@@ -163,17 +194,17 @@ export const putEquipmentsResponseSchema = z.object({
 	}),
 });
 
-export const borrowEquipmentPathParamsSchema = z.object({
+export const equipmentPathParamsSchema = z.object({
 	id: z.string().openapi({
 		description: "DBに登録された機器ID",
 		example: "af5pgobariolcb44m5xim5zn",
 	}),
 });
 
-export const returnEquipmentPathParamsSchema = z.object({
-	id: z.string().openapi({
-		description: "DBに登録された機器ID",
-		example: "af5pgobariolcb44m5xim5zn",
+export const borrowEquipmentRequestSchema = z.object({
+	user_id: z.string().openapi({
+		description: "ユーザーID",
+		example: "20k23075",
 	}),
 });
 
@@ -193,9 +224,7 @@ export type CreateEquipmentResponse = z.infer<
 >;
 export type PutEquipmentsRequest = z.infer<typeof putEquipmentsRequestSchema>;
 export type PutEquipmentsResponse = z.infer<typeof putEquipmentsResponseSchema>;
-export type BorrowEquipmentPathParams = z.infer<
-	typeof borrowEquipmentPathParamsSchema
->;
+
 export type DeleteEquipmentsResponse = z.infer<
 	typeof deleteEquipmentsResponseSchema
 >;
