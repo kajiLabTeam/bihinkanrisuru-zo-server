@@ -208,13 +208,6 @@ export const borrowEquipmentRequestSchema = z.object({
 	}),
 });
 
-export const deleteEquipmentsResponseSchema = z.object({
-	result: z.enum(["success", "failure"]).openapi({
-		description: "削除結果",
-		example: "success",
-	}),
-});
-
 export type GetEquipmentsResponse = z.infer<typeof getEquipmentsResponseSchema>;
 export type CreateEquipmentRequest = z.infer<
 	typeof createEquipmentRequestSchema
@@ -224,7 +217,3 @@ export type CreateEquipmentResponse = z.infer<
 >;
 export type PutEquipmentsRequest = z.infer<typeof putEquipmentsRequestSchema>;
 export type PutEquipmentsResponse = z.infer<typeof putEquipmentsResponseSchema>;
-
-export type DeleteEquipmentsResponse = z.infer<
-	typeof deleteEquipmentsResponseSchema
->;

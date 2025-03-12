@@ -36,17 +36,3 @@ export const insertEquipmentTags = async (
 		data: equipmentTags,
 	});
 };
-
-export const deleteEquipmentTag = async (
-	equipmentId: string,
-	tagId: string,
-): Promise<EquipmentTag> => {
-	return await prismaClient.equipmentTag.delete({
-		where: {
-			equipmentId_tagId: {
-				equipmentId,
-				tagId,
-			},
-		},
-	});
-};

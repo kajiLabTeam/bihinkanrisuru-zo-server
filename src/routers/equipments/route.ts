@@ -238,23 +238,3 @@ export const returnEquipmentRoute = createRoute({
 		},
 	},
 });
-
-export const deleteEquipmentsRoute = createRoute({
-	tags: ["equipments"],
-	path: "/{id}",
-	method: "delete",
-	description: "備品削除",
-	responses: {
-		204: {
-			description: "No Content",
-		},
-		500: {
-			description: "Internal Server Error",
-			content: {
-				"application/json": {
-					schema: errorResponseSchema,
-				},
-			},
-		},
-	},
-});
