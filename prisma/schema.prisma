@@ -63,26 +63,28 @@ model Tag {
 }
 
 model EquipmentBorrowLog {
-  id         String    @id @default(cuid())
   borrowedAt DateTime  @default(now()) @map("borrowed_at") @db.Timestamp(0)
   returnedAt DateTime? @map("returned_at") @db.Timestamp(0)
 
-  equipmentId String @map("equipment_id")
   userId      String @map("user_id")
+  equipmentId String @map("equipment_id")
 
-  Equipment Equipment @relation(fields: [equipmentId], references: [id])
   User      User      @relation(fields: [userId], references: [id])
+  Equipment Equipment @relation(fields: [equipmentId], references: [id])
 
-  @@map("base_urls")
+  @@id([userId, equipmentId, borrowedAt])
+  @@unique([userId, equipmentId, borrowedAt])
+  @@map("equipment_borrow_logs")
 }
 
 model EquipmentTag {
-  equipmentId String    @map("equipment_id")
-  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamp(0)
-  updatedAt   DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
-  deletedAt   DateTime? @map("deleted_at") @db.Timestamp(0)
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
+  deletedAt DateTime? @map("deleted_at") @db.Timestamp(0)
 
-  tagId     String    @map("tag_id")
+  equipmentId String @map("equipment_id")
+  tagId       String @map("tag_id")
+
   equipment Equipment @relation(fields: [equipmentId], references: [id])
   tag       Tag       @relation(fields: [tagId], references: [id])
 
