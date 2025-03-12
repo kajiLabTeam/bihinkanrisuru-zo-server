@@ -1,10 +1,14 @@
 -- CreateEnum
 CREATE TYPE "EquipmentStatus" AS ENUM ('AVAILABLE', 'BORROWED', 'LOST');
 
+-- CreateEnum
+CREATE TYPE "UserStatus" AS ENUM ('PENDING', 'APPROVED', 'REJECTED');
+
 -- CreateTable
 CREATE TABLE "users" (
-    "id" TEXT NOT NULL,
+    "id" VARCHAR(256) NOT NULL,
     "name" VARCHAR(256) NOT NULL,
+    "status" "UserStatus" NOT NULL DEFAULT 'PENDING',
     "created_at" TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deleted_at" TIMESTAMP(0),
@@ -19,7 +23,7 @@ CREATE TABLE "equipments" (
     "name" VARCHAR(256) NOT NULL,
     "place" VARCHAR(256) NOT NULL,
     "status" "EquipmentStatus" NOT NULL DEFAULT 'AVAILABLE',
-    "purchase_date" TIMESTAMP(0),
+    "purchase_date" TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "created_at" TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deleted_at" TIMESTAMP(0),
@@ -41,7 +45,7 @@ CREATE TABLE "tags" (
 -- CreateTable
 CREATE TABLE "base_urls" (
     "id" TEXT NOT NULL,
-    "borrowed_at" TIMESTAMP(0),
+    "borrowed_at" TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "returned_at" TIMESTAMP(0),
     "equipment_id" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
@@ -52,6 +56,9 @@ CREATE TABLE "base_urls" (
 -- CreateTable
 CREATE TABLE "equipment_tags" (
     "equipment_id" TEXT NOT NULL,
+    "created_at" TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "deleted_at" TIMESTAMP(0),
     "tag_id" TEXT NOT NULL,
 
     CONSTRAINT "equipment_tags_pkey" PRIMARY KEY ("equipment_id","tag_id")
@@ -59,9 +66,6 @@ CREATE TABLE "equipment_tags" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_name_key" ON "users"("name");
-
--- CreateIndex
-CREATE UNIQUE INDEX "equipments_assetId_key" ON "equipments"("assetId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "equipments_name_key" ON "equipments"("name");
