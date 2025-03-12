@@ -42,6 +42,8 @@ export const createEquipmentHandler: RouteHandler<
 			tagRecords.map((tag) => tag.id),
 		);
 
+		// TODO: QRコード発行のAPIを呼び出す
+
 		return c.json(
 			{
 				id: equipmentRecord.id,
