@@ -10,11 +10,9 @@ import {
 	rejectUserRoute,
 } from "./users";
 
-const userRouter = new OpenAPIHono();
+export const userRouter = new OpenAPIHono();
 
 userRouter.openapi(getUsersRoute, getUsersHandler);
 userRouter.openapi(createUserRoute, createUserHandler);
 userRouter.openapi(approveUserRoute, approveUserHandler);
 userRouter.openapi(rejectUserRoute, rejectUserHandler);
-
-export default userRouter;

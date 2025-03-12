@@ -10,11 +10,9 @@ import {
 	putEquipmentsRoute,
 } from "./equipments";
 
-const equipmentRouter = new OpenAPIHono();
+export const equipmentRouter = new OpenAPIHono();
 
 equipmentRouter.openapi(getEquipmentsRoute, getEquipmentsHandler);
 equipmentRouter.openapi(createEquipmentRoute, createEquipmentHandler);
 equipmentRouter.openapi(putEquipmentsRoute, putEquipmentHandler);
 equipmentRouter.openapi(deleteEquipmentsRoute, deleteEquipmentHandler);
-
-export default equipmentRouter;

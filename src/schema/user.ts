@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { stringToIntWithDefault } from "~/utils/queryParse";
 
-export const getAccessJudgmentUrlsQuerySchema = z.object({
+export const getUsersQuerySchema = z.object({
 	id: z.string().optional().openapi({
 		description: "学生証のバーコードから読み取れるユーザーID",
 		example: "20k23075",
