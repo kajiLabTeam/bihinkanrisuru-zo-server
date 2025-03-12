@@ -3,13 +3,14 @@ import type { RouteHandler } from "@hono/zod-openapi";
 import type { Context } from "hono";
 import { getUsers } from "~/models/user";
 import type { getUsersRoute } from "~/routers/users/users";
-import { getAccessJudgmentUrlsQuerySchema } from "~/schema/user";
+import { getUsersQuerySchema } from "~/schema/user";
 
 export const getUsersHandler: RouteHandler<typeof getUsersRoute> = async (
 	c: Context,
 ) => {
-	const { id, name, limit, offset, sort, order } =
-		getAccessJudgmentUrlsQuerySchema.parse(c.req.query());
+	const { limit, offset, sort, order } = getUsersQuerySchema.parse(
+		c.req.query(),
+	);
 
 	const userRecords = await getUsers(limit, offset, sort, order);
 

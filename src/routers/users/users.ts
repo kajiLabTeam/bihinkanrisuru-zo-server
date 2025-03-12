@@ -5,7 +5,7 @@ import {
 	approveUserResponseSchema,
 	createUserRequestSchema,
 	createUserResponseSchema,
-	getAccessJudgmentUrlsQuerySchema,
+	getUsersQuerySchema,
 	getUsersResponseSchema,
 	rejectUserPathParamSchema,
 	rejectUserResponseSchema,
@@ -17,7 +17,7 @@ export const getUsersRoute = createRoute({
 	method: "get",
 	description: "ユーザ一覧を取得 ",
 	request: {
-		query: getAccessJudgmentUrlsQuerySchema,
+		query: getUsersQuerySchema,
 	},
 	responses: {
 		200: {

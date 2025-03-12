@@ -18,7 +18,6 @@ router.doc("/specification", {
 		{
 			name: "users",
 			description: "ユーザー情報を管理するAPI",
-
 		},
 		{
 			name: "equipments",
