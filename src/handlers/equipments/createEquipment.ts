@@ -1,10 +1,7 @@
 import type { RouteHandler } from "@hono/zod-openapi";
 
 import type { Context } from "hono";
-import {
-	type createEquipmentRoute,
-	getEquipmentsRoute,
-} from "~/routers/equipments";
+import type { createEquipmentRoute } from "~/routers/equipments/equipments";
 import {
 	type CreateEquipmentResponse,
 	createEquipmentRequestSchema,
