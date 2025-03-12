@@ -26,18 +26,11 @@ export const insertUser = async (id: string, name: string): Promise<User> => {
 
 export const updateUserById = async (
 	id: string,
-	name?: string,
-	status?: UserStatus,
+	updateData: {
+		name?: string;
+		status?: UserStatus;
+	},
 ): Promise<User> => {
-	const updateData: { name?: string; status?: UserStatus } = {};
-
-	if (name !== undefined) {
-		updateData.name = name;
-	}
-	if (status !== undefined) {
-		updateData.status = status;
-	}
-
 	return await prismaClient.user.update({
 		where: {
 			id,
