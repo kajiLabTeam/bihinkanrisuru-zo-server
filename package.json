@@ -10,7 +10,8 @@
     "lint:tsc": "tsc --noEmit",
     "lint:cspell": "cspell -c ../../cspell.json src/**/*",
     "format": "yarn biome check --write ./src",
-    "prisma:generate": "prisma generate"
+    "prisma:init": "yarn prisma migrate dev --name init",
+    "seed": "tsx prisma/seed.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

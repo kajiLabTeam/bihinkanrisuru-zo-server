@@ -23,31 +23,30 @@ enum UserStatus {
 }
 
 model User {
-  id                  String                @id @default(cuid())
-  name                String                @unique @db.VarChar(256)
-  status              UserStatus             @default(PENDING)
-  createdAt           DateTime              @default(now()) @map("created_at") @db.Timestamp(0)
-  updatedAt           DateTime              @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
-  deletedAt           DateTime?             @map("deleted_at") @db.Timestamp(0)
-  EquipmentBorrowLogs EquipmentBorrowLogs[]
+  id                 String               @id @db.VarChar(256)
+  name               String               @unique @db.VarChar(256)
+  status             UserStatus           @default(PENDING)
+  createdAt          DateTime             @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt          DateTime             @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
+  deletedAt          DateTime?            @map("deleted_at") @db.Timestamp(0)
+  EquipmentBorrowLog EquipmentBorrowLog[]
 
   @@map("users")
 }
 
 model Equipment {
-  id                  String                @id @default(cuid())
-  assetId             String                @unique @db.VarChar(256)
-  name                String                @unique @db.VarChar(256)
-  place               String                @db.VarChar(256)
-  status              EquipmentStatus       @default(AVAILABLE)
-  purchaseDate        DateTime?             @map("purchase_date") @db.Timestamp(0)
-  createdAt           DateTime              @default(now()) @map("created_at") @db.Timestamp(0)
-  updatedAt           DateTime              @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
-  deletedAt           DateTime?             @map("deleted_at") @db.Timestamp(0)
+  id           String          @id @default(cuid())
+  assetId      String          @db.VarChar(256)
+  name         String          @unique @db.VarChar(256)
+  place        String          @db.VarChar(256)
+  status       EquipmentStatus @default(AVAILABLE)
+  purchaseDate DateTime        @default(now()) @map("purchase_date") @db.Timestamp(0)
+  createdAt    DateTime        @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt    DateTime        @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
+  deletedAt    DateTime?       @map("deleted_at") @db.Timestamp(0)
 
-  
-  EquipmentTag        EquipmentTag[]
-  EquipmentBorrowLogs EquipmentBorrowLogs[]
+  EquipmentTag       EquipmentTag[]
+  EquipmentBorrowLog EquipmentBorrowLog[]
 
   @@map("equipments")
 }
@@ -63,9 +62,9 @@ model Tag {
   @@map("tags")
 }
 
-model EquipmentBorrowLogs {
+model EquipmentBorrowLog {
   id         String    @id @default(cuid())
-  borrowedAt DateTime? @map("borrowed_at") @db.Timestamp(0)
+  borrowedAt DateTime  @default(now()) @map("borrowed_at") @db.Timestamp(0)
   returnedAt DateTime? @map("returned_at") @db.Timestamp(0)
 
   equipmentId String @map("equipment_id")
@@ -79,9 +78,13 @@ model EquipmentBorrowLogs {
 
 model EquipmentTag {
   equipmentId String    @map("equipment_id")
-  tagId       String    @map("tag_id")
-  equipment   Equipment @relation(fields: [equipmentId], references: [id])
-  tag         Tag       @relation(fields: [tagId], references: [id])
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt   DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
+  deletedAt   DateTime? @map("deleted_at") @db.Timestamp(0)
+
+  tagId     String    @map("tag_id")
+  equipment Equipment @relation(fields: [equipmentId], references: [id])
+  tag       Tag       @relation(fields: [tagId], references: [id])
 
   @@id([equipmentId, tagId])
   @@map("equipment_tags")

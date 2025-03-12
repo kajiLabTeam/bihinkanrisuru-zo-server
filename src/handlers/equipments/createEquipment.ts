@@ -1,7 +1,12 @@
 import type { RouteHandler } from "@hono/zod-openapi";
 
 import type { Context } from "hono";
+import { insertEquipment } from "~/models/equipment";
+import { insertEquipmentTags } from "~/models/equipmentTag";
+import { ModelError } from "~/models/errors";
+import { getTagByIds } from "~/models/tag";
 import type { createEquipmentRoute } from "~/routers/equipments/equipments";
+import type { ErrorResponse } from "~/schema/common/error";
 import {
 	type CreateEquipmentResponse,
 	createEquipmentRequestSchema,
@@ -20,15 +25,56 @@ export const createEquipmentHandler: RouteHandler<
 		return c.json(validationResult.error, 400);
 	}
 
-	const requestData = validationResult.data;
+	try {
+		const requestData = validationResult.data;
 
-	const response: CreateEquipmentResponse = {
-		asset_id: requestData.asset_id,
-		name: requestData.name,
-		purchase_date: requestData.purchase_date,
-		place: requestData.place,
-		tags: requestData.tags,
-	};
+		const tagRecords = await getTagByIds(requestData.tag_ids);
+		const equipmentRecord = await insertEquipment(
+			requestData.asset_id,
+			requestData.name,
+			requestData.place,
+			requestData.purchase_date
+				? new Date(requestData.purchase_date)
+				: undefined,
+		);
+		await insertEquipmentTags(
+			equipmentRecord.id,
+			tagRecords.map((tag) => tag.id),
+		);
 
-	return c.json(response, 201);
+		// TODO: QRコード発行のAPIを呼び出す
+
+		return c.json(
+			{
+				id: equipmentRecord.id,
+				asset_id: equipmentRecord.assetId,
+				name: equipmentRecord.name,
+				status: equipmentRecord.status,
+				purchase_date: equipmentRecord.purchaseDate.getTime(),
+				place: equipmentRecord.place,
+				tags: tagRecords.map((tag) => ({
+					id: tag.id,
+					name: tag.name,
+				})),
+			} satisfies CreateEquipmentResponse,
+			201,
+		);
+	} catch (e) {
+		return e instanceof ModelError
+			? c.json(
+					{
+						error: {
+							message: "Database Error",
+							details: [e.message],
+						},
+					} satisfies ErrorResponse,
+					400,
+				)
+			: c.json(
+					{
+						error: { message: "Internal Server Error", details: [] },
+					} satisfies ErrorResponse,
+					500,
+				);
+	}
 };
