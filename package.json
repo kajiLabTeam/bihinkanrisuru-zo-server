@@ -11,10 +11,16 @@
     "lint:cspell": "cspell -c ../../cspell.json src/**/*",
     "format": "yarn biome check --write ./src",
     "prisma:init": "yarn prisma migrate dev --name init",
-    "seed": "tsx prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts",
+    "prepare": "husky"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
+  },
+  "lint-staged": {
+    "*.{ts}": [
+      "yarn format"
+    ]
   },
   "dependencies": {
     "@hono/node-server": "^1.13.5",
@@ -28,6 +34,8 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@types/node": "^20.11.17",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
     "prisma": "^6.3.1",
     "tsx": "^4.19.2",
     "typescript": "5.7.3"
