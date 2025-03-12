@@ -18,6 +18,16 @@ export const getEquipments = async (
 	});
 };
 
+export const getEquipmentById = async (
+	id: string,
+): Promise<Equipment | null> => {
+	return await prismaClient.equipment.findUnique({
+		where: {
+			id,
+		},
+	});
+};
+
 export const insertEquipment = async (
 	assetId: string,
 	name: string,
