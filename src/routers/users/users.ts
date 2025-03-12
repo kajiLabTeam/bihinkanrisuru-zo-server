@@ -116,7 +116,7 @@ export const approveUserRoute = createRoute({
 });
 
 export const rejectUserRoute = createRoute({
-	path: "/{id}/revoke",
+	path: "/{id}/reject",
 	method: "put",
 	description: "ユーザを拒否",
 	request: {
