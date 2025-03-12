@@ -4,7 +4,7 @@ import type { Context } from "hono";
 import { insertEquipment } from "~/models/equipment";
 import { insertEquipmentTags } from "~/models/equipmentTag";
 import { ModelError } from "~/models/errors";
-import { getTagByIds } from "~/models/tag";
+import { getTagsByIds } from "~/models/tag";
 import type { createEquipmentRoute } from "~/routers/equipments/route";
 import type { ErrorResponse } from "~/schema/common/error";
 import {
@@ -28,7 +28,7 @@ export const createEquipmentHandler: RouteHandler<
 	try {
 		const requestData = validationResult.data;
 
-		const tagRecords = await getTagByIds(requestData.tag_ids);
+		const tagRecords = await getTagsByIds(requestData.tag_ids);
 		const equipmentRecord = await insertEquipment(
 			requestData.asset_id,
 			requestData.name,

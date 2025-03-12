@@ -1,12 +1,13 @@
 import { createRoute } from "@hono/zod-openapi";
 import {
-	borrowEquipmentPathParamsSchema,
+	borrowEquipmentRequestSchema,
 	createEquipmentRequestSchema,
 	createEquipmentResponseSchema,
+	equipmentPathParamsSchema,
+	getEquipmentsQuerySchema,
 	getEquipmentsResponseSchema,
 	putEquipmentsRequestSchema,
 	putEquipmentsResponseSchema,
-	returnEquipmentPathParamsSchema,
 } from "~/schema/equipment";
 
 import { errorResponseSchema } from "~/schema/common/error";
@@ -17,6 +18,9 @@ export const getEquipmentsRoute = createRoute({
 	path: "/",
 	method: "get",
 	description: "備品一覧を取得 ",
+	request: {
+		query: getEquipmentsQuerySchema,
+	},
 	responses: {
 		200: {
 			description: "OK",
@@ -82,7 +86,7 @@ export const createEquipmentRoute = createRoute({
 
 export const putEquipmentsRoute = createRoute({
 	tags: ["equipments"],
-	path: "/{equipmentId}",
+	path: "/{id}",
 	method: "put",
 	description: "備品編集",
 	request: {
@@ -125,11 +129,19 @@ export const putEquipmentsRoute = createRoute({
 
 export const borrowEquipmentRoute = createRoute({
 	tags: ["equipments"],
-	path: "/{equipmentId}/borrow",
+	path: "/{id}/borrow",
 	method: "put",
 	description: "備品を借りる",
 	request: {
-		params: borrowEquipmentPathParamsSchema,
+		params: equipmentPathParamsSchema,
+		body: {
+			required: true,
+			content: {
+				"application/json": {
+					schema: borrowEquipmentRequestSchema,
+				},
+			},
+		},
 	},
 	responses: {
 		201: {
@@ -142,6 +154,22 @@ export const borrowEquipmentRoute = createRoute({
 		},
 		400: {
 			description: "Bad Request",
+			content: {
+				"application/json": {
+					schema: errorResponseSchema,
+				},
+			},
+		},
+		404: {
+			description: "Not Found",
+			content: {
+				"application/json": {
+					schema: errorResponseSchema,
+				},
+			},
+		},
+		422: {
+			description: "Unprocessable Entity",
 			content: {
 				"application/json": {
 					schema: errorResponseSchema,
@@ -161,11 +189,11 @@ export const borrowEquipmentRoute = createRoute({
 
 export const returnEquipmentRoute = createRoute({
 	tags: ["equipments"],
-	path: "/{equipmentId}/return",
+	path: "/{id}/return",
 	method: "put",
 	description: "備品を返す",
 	request: {
-		params: returnEquipmentPathParamsSchema,
+		params: equipmentPathParamsSchema,
 	},
 	responses: {
 		201: {
@@ -178,6 +206,22 @@ export const returnEquipmentRoute = createRoute({
 		},
 		400: {
 			description: "Bad Request",
+			content: {
+				"application/json": {
+					schema: errorResponseSchema,
+				},
+			},
+		},
+		404: {
+			description: "Not Found",
+			content: {
+				"application/json": {
+					schema: errorResponseSchema,
+				},
+			},
+		},
+		422: {
+			description: "Unprocessable Entity",
 			content: {
 				"application/json": {
 					schema: errorResponseSchema,
@@ -197,7 +241,7 @@ export const returnEquipmentRoute = createRoute({
 
 export const deleteEquipmentsRoute = createRoute({
 	tags: ["equipments"],
-	path: "/{equipmentId}",
+	path: "/{id}",
 	method: "delete",
 	description: "備品削除",
 	responses: {

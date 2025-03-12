@@ -17,7 +17,7 @@ export const getTags = async (
 	});
 };
 
-export const getTagByIds = async (id: string[]): Promise<Tag[]> => {
+export const getTagsByIds = async (id: string[]): Promise<Tag[]> => {
 	const tags = await prismaClient.tag.findMany({
 		where: {
 			id: {

@@ -1,39 +1,67 @@
 import type { RouteHandler } from "@hono/zod-openapi";
 import type { Context } from "hono";
+
+import { getEquipments } from "~/models/equipment";
+import { getLatestEquipmentBorrowLogByEquipmentId } from "~/models/equipmentBorrowLog";
+import { getEquipmentTagsByEquipmentId } from "~/models/equipmentTag";
+import { getTagsByIds } from "~/models/tag";
+import { getUserById } from "~/models/user";
 import type { getEquipmentsRoute } from "~/routers/equipments/route";
-import type { GetEquipmentsResponse } from "~/schema/equipment";
+import {
+	type GetEquipmentsResponse,
+	getEquipmentsQuerySchema,
+} from "~/schema/equipment";
 
 export const getEquipmentsHandler: RouteHandler<
 	typeof getEquipmentsRoute
 > = async (c: Context) => {
+	const { limit, offset, sort, order } = getEquipmentsQuerySchema.parse(
+		c.req.query(),
+	);
+
 	const response: GetEquipmentsResponse = {
-		equipments: [
-			{
-				equipment_id: "af5pgobariolcb44m5xim5zn",
-				asset_id: "1234-0000",
-				name: "ノートパソコン",
-				states: "borrowed",
-				borrower: "tada",
-				borrowed_date: 1633824000000,
-				registration_date: 1633824000000,
-				purchase_date: 1633824000000,
-				place: "bookshelf-4",
-				tags: ["PC", "portable", "essential"],
-			},
-			{
-				equipment_id: "af5pgobariolcb44m5xim5zn",
-				asset_id: "1234-0000",
-				name: "13万のマスターキー",
-				states: "borrowed",
-				borrower: "mizutani",
-				borrowed_date: 1633824000000,
-				registration_date: 1633824000000,
-				purchase_date: 1633824000000,
-				place: "bookshelf-4",
-				tags: [],
-			},
-		],
+		equipments: [],
 	};
+
+	const equipmentRecords = await getEquipments(limit, offset, sort, order);
+
+	const equipmentPromises = equipmentRecords.map(async (equipment) => {
+		const equipmentTagRecords = await getEquipmentTagsByEquipmentId(
+			equipment.id,
+		);
+		const tagRecords = await getTagsByIds(
+			equipmentTagRecords.map((record) => record.tagId),
+		);
+		const equipmentBorrowLogRecord =
+			await getLatestEquipmentBorrowLogByEquipmentId(equipment.id);
+		const userRecord =
+			equipmentBorrowLogRecord && equipmentBorrowLogRecord.returnedAt == null
+				? await getUserById(equipmentBorrowLogRecord.userId)
+				: null;
+
+		return {
+			id: equipment.id,
+			asset_id: equipment.assetId,
+			name: equipment.name,
+			status: equipment.status,
+			place: equipment.place,
+			registration_at: equipment.createdAt.getTime(),
+			purchase_at: equipment.purchaseDate.getTime(),
+			borrower: userRecord
+				? {
+						id: userRecord.id,
+						name: userRecord.name,
+						borrowed_at: equipmentBorrowLogRecord!.borrowedAt.getTime(),
+					}
+				: null,
+			tags: tagRecords.map((tag) => ({
+				id: tag.id,
+				name: tag.name,
+			})),
+		};
+	});
+
+	response.equipments = await Promise.all(equipmentPromises);
 
 	return c.json(response, 200);
 };
