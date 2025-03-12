@@ -28,5 +28,5 @@ export const putEquipmentHandler: RouteHandler<
 		place: requestData.place,
 	};
 
-	return c.json(requestData, 201);
+	return c.json(response, 201);
 };
