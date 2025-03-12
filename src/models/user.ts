@@ -16,6 +16,14 @@ export const getUsers = async (
 	});
 };
 
+export const getUserById = async (id: string): Promise<User | null> => {
+	return await prismaClient.user.findUnique({
+		where: {
+			id,
+		},
+	});
+};
+
 export const insertUser = async (id: string, name: string): Promise<User> => {
 	return await prismaClient.user.upsert({
 		where: { id },
