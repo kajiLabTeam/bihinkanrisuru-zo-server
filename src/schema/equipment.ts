@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { tagSchema } from "./tag";
 import { unixTimestampSchema } from "./time";
 
 export const getEquipmentsResponseSchema = z.object({
@@ -40,9 +41,12 @@ export const getEquipmentsResponseSchema = z.object({
 				description: "機器の保管場所",
 				example: "bookshelf-4",
 			}),
-			tags: z.array(z.string()).openapi({
+			tags: z.array(tagSchema).openapi({
 				description: "機器のタグ一覧",
-				example: ["PC", "portable", "essential"],
+				example: [
+					{ id: "nw45xe6ksp4c8seq8u550lt8", name: "PC" },
+					{ id: "f7xx5gajjfbhprpj3eg39voh", name: "本" },
+				],
 			}),
 		}),
 	),
@@ -55,42 +59,50 @@ export const createEquipmentRequestSchema = z.object({
 	}),
 	name: z.string().openapi({
 		description: "機器の名称",
-		example: "タブレット",
+		example: "togawaさんのM3 MacBook Pro",
 	}),
-	purchase_date: unixTimestampSchema.openapi({
+	purchase_date: unixTimestampSchema.optional().openapi({
 		description: "購入日",
 		example: 1633824000000,
 	}),
 	place: z.string().openapi({
 		description: "機器の保管場所",
-		example: "cabinet-3",
+		example: "梶研究室学生部屋",
 	}),
-	tags: z.array(z.string()).openapi({
-		description: "機器のタグ一覧",
-		example: ["tablet", "touchscreen", "portable"],
+	tag_ids: z.array(z.string()).openapi({
+		description: "機器のタグID",
+		example: ["mjfqjy1iyuplusaonrecuupk"],
 	}),
 });
 
 export const createEquipmentResponseSchema = z.object({
+	id: z.string().openapi({
+		description: "DBで管理されるID",
+		example: "af5pgobariolcb44m5xim5zn",
+	}),
 	asset_id: z.string().openapi({
 		description: "資産管理ID",
 		example: "1234-0002",
 	}),
 	name: z.string().openapi({
 		description: "機器の名称",
-		example: "タブレット",
+		example: "togawaさんのM3 MacBook Pro",
+	}),
+	place: z.string().openapi({
+		description: "機器の保管場所",
+		example: "梶研究室学生部屋",
+	}),
+	status: z.string().openapi({
+		description: "機器の貸出状態",
+		example: "AVAILABLE",
 	}),
 	purchase_date: unixTimestampSchema.openapi({
 		description: "購入日",
 		example: 1633824000000,
 	}),
-	place: z.string().openapi({
-		description: "機器の保管場所",
-		example: "cabinet-3",
-	}),
-	tags: z.array(z.string()).openapi({
+	tags: z.array(tagSchema).openapi({
 		description: "機器のタグ一覧",
-		example: ["tablet", "touchscreen", "portable"],
+		example: [{ id: "mjfqjy1iyuplusaonrecuupk", name: "PC" }],
 	}),
 });
 
@@ -115,13 +127,10 @@ export const putEquipmentsRequestSchema = z.object({
 		description: "機器の保管場所",
 		example: "bookshelf-4",
 	}),
-	tags: z
-		.array(z.string())
-		.optional()
-		.openapi({
-			description: "機器のタグ一覧",
-			example: ["PC", "portable", "essential"],
-		}),
+	tag_ids: z.array(z.string()).openapi({
+		description: "機器のタグID",
+		example: ["nw45xe6ksp4c8seq8u550lt8", "f7xx5gajjfbhprpj3eg39voh"],
+	}),
 });
 
 export const putEquipmentsResponseSchema = z.object({
@@ -145,13 +154,13 @@ export const putEquipmentsResponseSchema = z.object({
 		description: "機器の保管場所",
 		example: "bookshelf-4",
 	}),
-	tags: z
-		.array(z.string())
-		.optional()
-		.openapi({
-			description: "機器のタグ一覧",
-			example: ["PC", "portable", "essential"],
-		}),
+	tags: z.array(tagSchema).openapi({
+		description: "機器のタグ一覧",
+		example: [
+			{ id: "nw45xe6ksp4c8seq8u550lt8", name: "PC" },
+			{ id: "f7xx5gajjfbhprpj3eg39voh", name: "本" },
+		],
+	}),
 });
 
 export const deleteEquipmentsResponseSchema = z.object({
