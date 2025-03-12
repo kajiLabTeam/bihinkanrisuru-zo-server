@@ -5,7 +5,7 @@ import { tagSchema } from "./tag";
 export const getEquipmentsResponseSchema = z.object({
 	equipments: z.array(
 		z.object({
-			equipment_id: z.string().openapi({
+			id: z.string().openapi({
 				description: "機器ID",
 				example: "af5pgobariolcb44m5xim5zn",
 			}),

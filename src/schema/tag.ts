@@ -1,28 +1,13 @@
 import { z } from "zod";
-import { stringToIntWithDefault } from "~/utils/queryParse";
+import { getQuerySchema } from "./common/query";
 
 export const tagSchema = z.object({
 	id: z.string().openapi({ example: "nw45xe6ksp4c8seq8u550lt8" }),
 	name: z.string().openapi({ example: "PC" }),
 });
 
-export const getTagsQuerySchema = z.object({
-	limit: z.string().optional().transform(stringToIntWithDefault(50)).openapi({
-		description: "取得するユーザの最大数",
-		example: "50",
-	}),
-	offset: z.string().optional().transform(stringToIntWithDefault(0)).openapi({
-		description: "取得するユーザのオフセット",
-		example: "0",
-	}),
-	sort: z.string().default("createdAt").openapi({
-		description: "ユーザのソート順",
-		example: "createdAt",
-	}),
-	order: z.string().default("desc").openapi({
-		description: "ユーザのソート順",
-		example: "desc",
-	}),
+export const getTagsQuerySchema = getQuerySchema.openapi({
+	description: "タグの取得クエリ",
 });
 
 export const getTagsResponseSchema = z.object({
