@@ -1,25 +1,30 @@
 import { createRoute } from "@hono/zod-openapi";
-import {
-	createEquipmentRequestSchema,
-	createEquipmentResponseSchema,
-	deleteEquipmentsResponseSchema,
-	getEquipmentsResponseSchema,
-	putEquipmentsRequestSchema,
-	putEquipmentsResponseSchema,
-} from "~/schema/equipment";
-
 import { errorResponseSchema } from "~/schema/error";
+import {
+	approveUserPathParamSchema,
+	approveUserResponseSchema,
+	createUserRequestSchema,
+	createUserResponseSchema,
+	getUsersQuerySchema,
+	getUsersResponseSchema,
+	rejectUserPathParamSchema,
+	rejectUserResponseSchema,
+} from "~/schema/user";
 
-export const getEquipmentsRoute = createRoute({
-	path: "/equipments",
+export const getUsersRoute = createRoute({
+	tags: ["users"],
+	path: "/",
 	method: "get",
-	description: "備品一覧を取得 ",
+	description: "ユーザ一覧を取得 ",
+	request: {
+		query: getUsersQuerySchema,
+	},
 	responses: {
 		200: {
 			description: "OK",
 			content: {
 				"application/json": {
-					schema: getEquipmentsResponseSchema,
+					schema: getUsersResponseSchema,
 				},
 			},
 		},
@@ -34,16 +39,17 @@ export const getEquipmentsRoute = createRoute({
 	},
 });
 
-export const createEquipmentRoute = createRoute({
-	path: "/equipments",
+export const createUserRoute = createRoute({
+	tags: ["users"],
+	path: "/",
 	method: "post",
-	description: "備品登録",
+	description: "ユーザ登録",
 	request: {
 		body: {
 			required: true,
 			content: {
 				"application/json": {
-					schema: createEquipmentRequestSchema,
+					schema: createUserRequestSchema,
 				},
 			},
 		},
@@ -53,7 +59,7 @@ export const createEquipmentRoute = createRoute({
 			description: "OK",
 			content: {
 				"application/json": {
-					schema: createEquipmentResponseSchema,
+					schema: createUserResponseSchema,
 				},
 			},
 		},
@@ -76,26 +82,20 @@ export const createEquipmentRoute = createRoute({
 	},
 });
 
-export const putEquipmentsRoute = createRoute({
-	path: "/equipments/{equipmentId}",
+export const approveUserRoute = createRoute({
+	tags: ["users"],
+	path: "/{id}/approve",
 	method: "put",
-	description: "備品編集",
+	description: "ユーザを承認",
 	request: {
-		body: {
-			required: true,
-			content: {
-				"application/json": {
-					schema: putEquipmentsRequestSchema,
-				},
-			},
-		},
+		params: approveUserPathParamSchema,
 	},
 	responses: {
 		201: {
 			description: "OK",
 			content: {
 				"application/json": {
-					schema: putEquipmentsResponseSchema,
+					schema: approveUserResponseSchema,
 				},
 			},
 		},
@@ -118,13 +118,30 @@ export const putEquipmentsRoute = createRoute({
 	},
 });
 
-export const deleteEquipmentsRoute = createRoute({
-	path: "/equipments/{equipmentId}",
-	method: "delete",
-	description: "備品削除",
+export const rejectUserRoute = createRoute({
+	tags: ["users"],
+	path: "/{id}/reject",
+	method: "put",
+	description: "ユーザを拒否",
+	request: {
+		params: rejectUserPathParamSchema,
+	},
 	responses: {
-		204: {
-			description: "No Content",
+		201: {
+			description: "OK",
+			content: {
+				"application/json": {
+					schema: rejectUserResponseSchema,
+				},
+			},
+		},
+		400: {
+			description: "Bad Request",
+			content: {
+				"application/json": {
+					schema: errorResponseSchema,
+				},
+			},
 		},
 		500: {
 			description: "Internal Server Error",

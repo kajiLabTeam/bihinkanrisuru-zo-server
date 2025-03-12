@@ -1,6 +1,6 @@
 import type { RouteHandler } from "@hono/zod-openapi";
 import type { Context } from "hono";
-import type { putEquipmentsRoute } from "~/routers/equipments";
+import type { putEquipmentsRoute } from "~/routers/equipments/equipments";
 import {
 	type PutEquipmentsResponse,
 	putEquipmentsRequestSchema,
@@ -28,5 +28,5 @@ export const putEquipmentHandler: RouteHandler<
 		place: requestData.place,
 	};
 
-	return c.json(requestData, 201);
+	return c.json(response, 201);
 };

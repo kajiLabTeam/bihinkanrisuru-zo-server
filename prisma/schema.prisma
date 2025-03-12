@@ -11,15 +11,21 @@ datasource db {
 }
 
 enum EquipmentStatus {
-  AVAILABLE  
-  BORROWED    
-  LOST         
+  AVAILABLE
+  BORROWED
+  LOST
 }
 
+enum UserStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
 
 model User {
   id                  String                @id @default(cuid())
   name                String                @unique @db.VarChar(256)
+  status              UserStatus             @default(PENDING)
   createdAt           DateTime              @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt           DateTime              @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
   deletedAt           DateTime?             @map("deleted_at") @db.Timestamp(0)
@@ -30,12 +36,16 @@ model User {
 
 model Equipment {
   id                  String                @id @default(cuid())
+  assetId             String                @unique @db.VarChar(256)
   name                String                @unique @db.VarChar(256)
+  place               String                @db.VarChar(256)
   status              EquipmentStatus       @default(AVAILABLE)
   purchaseDate        DateTime?             @map("purchase_date") @db.Timestamp(0)
   createdAt           DateTime              @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt           DateTime              @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
-  deletedAt           DateTime              @map("deleted_at") @db.Timestamp(0)
+  deletedAt           DateTime?             @map("deleted_at") @db.Timestamp(0)
+
+  
   EquipmentTag        EquipmentTag[]
   EquipmentBorrowLogs EquipmentBorrowLogs[]
 
