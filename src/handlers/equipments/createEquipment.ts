@@ -6,11 +6,11 @@ import { insertEquipmentTags } from "~/models/equipmentTag";
 import { ModelError } from "~/models/errors";
 import { getTagByIds } from "~/models/tag";
 import type { createEquipmentRoute } from "~/routers/equipments/equipments";
+import type { ErrorResponse } from "~/schema/common/error";
 import {
 	type CreateEquipmentResponse,
 	createEquipmentRequestSchema,
 } from "~/schema/equipment";
-import type { ErrorResponse } from "~/schema/error";
 import { validateRequestBody } from "~/utils/validateRequestBody";
 
 export const createEquipmentHandler: RouteHandler<

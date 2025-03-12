@@ -1,5 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
-import { errorResponseSchema } from "~/schema/error";
+import { errorResponseSchema } from "~/schema/common/error";
 import {
 	approveUserPathParamSchema,
 	approveUserResponseSchema,
