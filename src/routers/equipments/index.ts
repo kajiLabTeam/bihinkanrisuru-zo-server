@@ -12,7 +12,7 @@ import {
 	getEquipmentsRoute,
 	putEquipmentsRoute,
 	returnEquipmentRoute,
-} from "./equipments";
+} from "./route";
 
 export const equipmentRouter = new OpenAPIHono();
 

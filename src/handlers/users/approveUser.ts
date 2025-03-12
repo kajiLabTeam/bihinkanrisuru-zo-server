@@ -2,7 +2,7 @@ import type { RouteHandler } from "@hono/zod-openapi";
 
 import type { Context } from "hono";
 import { updateUserById } from "~/models/user";
-import type { approveUserRoute } from "~/routers/users/users";
+import type { approveUserRoute } from "~/routers/users/route";
 import { approveUserPathParamSchema } from "~/schema/user";
 
 export const approveUserHandler: RouteHandler<typeof approveUserRoute> = async (

@@ -2,7 +2,7 @@ import type { RouteHandler } from "@hono/zod-openapi";
 
 import type { Context } from "hono";
 import { getUsers } from "~/models/user";
-import type { getUsersRoute } from "~/routers/users/users";
+import type { getUsersRoute } from "~/routers/users/route";
 import { type GetUsersResponse, getUsersQuerySchema } from "~/schema/user";
 
 export const getUsersHandler: RouteHandler<typeof getUsersRoute> = async (

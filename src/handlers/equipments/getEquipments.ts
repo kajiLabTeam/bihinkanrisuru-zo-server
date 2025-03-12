@@ -1,6 +1,6 @@
 import type { RouteHandler } from "@hono/zod-openapi";
 import type { Context } from "hono";
-import type { getEquipmentsRoute } from "~/routers/equipments/equipments";
+import type { getEquipmentsRoute } from "~/routers/equipments/route";
 import type { GetEquipmentsResponse } from "~/schema/equipment";
 
 export const getEquipmentsHandler: RouteHandler<

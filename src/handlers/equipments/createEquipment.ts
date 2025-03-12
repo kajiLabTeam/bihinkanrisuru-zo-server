@@ -5,7 +5,7 @@ import { insertEquipment } from "~/models/equipment";
 import { insertEquipmentTags } from "~/models/equipmentTag";
 import { ModelError } from "~/models/errors";
 import { getTagByIds } from "~/models/tag";
-import type { createEquipmentRoute } from "~/routers/equipments/equipments";
+import type { createEquipmentRoute } from "~/routers/equipments/route";
 import type { ErrorResponse } from "~/schema/common/error";
 import {
 	type CreateEquipmentResponse,
