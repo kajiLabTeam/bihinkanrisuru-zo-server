@@ -17,11 +17,10 @@ export const getUsers = async (
 };
 
 export const insertUser = async (id: string, name: string): Promise<User> => {
-	return await prismaClient.user.create({
-		data: {
-			id,
-			name,
-		},
+	return await prismaClient.user.upsert({
+		where: { id },
+		update: { name },
+		create: { id, name },
 	});
 };
 
