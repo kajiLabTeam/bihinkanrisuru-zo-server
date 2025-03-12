@@ -1,6 +1,21 @@
 import { z } from "zod";
 import { stringToIntWithDefault } from "~/utils/queryParse";
 
+const userSchema = z.object({
+	id: z.string().openapi({
+		description: "学生証のバーコードから読み取れるユーザーID",
+		example: "20k23075",
+	}),
+	name: z.string().openapi({
+		description: "ユーザー名",
+		example: "tada",
+	}),
+	status: z.string().optional().openapi({
+		description: "ステータス",
+		example: "PENDING",
+	}),
+});
+
 export const getUsersQuerySchema = z.object({
 	id: z.string().optional().openapi({
 		description: "学生証のバーコードから読み取れるユーザーID",
@@ -30,19 +45,8 @@ export const getUsersQuerySchema = z.object({
 
 export const getUsersResponseSchema = z.object({
 	users: z.array(
-		z.object({
-			id: z.string().openapi({
-				description: "学生証のバーコードから読み取れるユーザーID",
-				example: "20k23075",
-			}),
-			name: z.string().openapi({
-				description: "ユーザー名",
-				example: "tada",
-			}),
-			status: z.string().openapi({
-				description: "ステータス",
-				example: "pending",
-			}),
+		userSchema.openapi({
+			description: "ユーザー情報",
 		}),
 	),
 });
@@ -58,66 +62,16 @@ export const createUserRequestSchema = z.object({
 	}),
 });
 
-export const createUserResponseSchema = z.object({
-	id: z.string().openapi({
-		description: "学生証のバーコードから読み取れるユーザーID",
-		example: "20k23075",
-	}),
-	status: z.string().openapi({
-		description: "ステータス",
-		example: "pending",
-	}),
-	name: z.string().openapi({
-		description: "ユーザー名",
-		example: "tada",
-	}),
+export const createUserResponseSchema = userSchema.openapi({
+	description: "ユーザー情報",
 });
 
-export const approveUserPathParamSchema = z.object({
+export const userPathParamSchema = z.object({
 	id: z.string().openapi({
 		description: "学生証のバーコードから読み取れるユーザーID",
 		example: "20k23075",
-	}),
-});
-
-export const approveUserResponseSchema = z.object({
-	id: z.string().openapi({
-		description: "学生証のバーコードから読み取れるユーザーID",
-		example: "20k23075",
-	}),
-	status: z.string().openapi({
-		description: "ステータス",
-		example: "approved",
-	}),
-	name: z.string().openapi({
-		description: "ユーザー名",
-		example: "tada",
-	}),
-});
-
-export const rejectUserPathParamSchema = z.object({
-	id: z.string().openapi({
-		description: "学生証のバーコードから読み取れるユーザーID",
-		example: "20k23075",
-	}),
-});
-
-export const rejectUserResponseSchema = z.object({
-	id: z.string().openapi({
-		description: "学生証のバーコードから読み取れるユーザーID",
-		example: "20k23075",
-	}),
-	status: z.string().openapi({
-		description: "ステータス",
-		example: "rejected",
-	}),
-	name: z.string().openapi({
-		description: "ユーザー名",
-		example: "tada",
 	}),
 });
 
 export type GetUsersResponse = z.infer<typeof getUsersResponseSchema>;
 export type CreateUserResponse = z.infer<typeof createUserResponseSchema>;
-export type ApproveUserResponse = z.infer<typeof approveUserResponseSchema>;
-export type RejectUserResponse = z.infer<typeof rejectUserResponseSchema>;
