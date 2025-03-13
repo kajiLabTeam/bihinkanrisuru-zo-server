@@ -50,8 +50,10 @@ export const createEquipmentHandler: RouteHandler<
 				asset_id: equipmentRecord.assetId,
 				name: equipmentRecord.name,
 				status: equipmentRecord.status,
-				purchase_date: equipmentRecord.purchaseDate.getTime(),
 				place: equipmentRecord.place,
+				registration_at: equipmentRecord.createdAt.getTime(),
+				purchase_at: equipmentRecord.purchaseDate.getTime(),
+				borrower: null,
 				tags: tagRecords.map((tag) => ({
 					id: tag.id,
 					name: tag.name,

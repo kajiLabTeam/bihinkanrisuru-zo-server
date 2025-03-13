@@ -4,6 +4,7 @@ import {
 	createEquipmentRequestSchema,
 	createEquipmentResponseSchema,
 	equipmentPathParamsSchema,
+	getEquipmentResponseSchema,
 	getEquipmentsQuerySchema,
 	getEquipmentsResponseSchema,
 	putEquipmentsRequestSchema,
@@ -12,6 +13,42 @@ import {
 
 import { errorResponseSchema } from "~/schema/common/error";
 import { statusMessageResponseSchema } from "~/schema/common/message";
+
+export const getEquipmentRoute = createRoute({
+	tags: ["equipments"],
+	path: "/{id}",
+	method: "get",
+	description: "備品一覧を取得 ",
+	request: {
+		params: equipmentPathParamsSchema,
+	},
+	responses: {
+		200: {
+			description: "OK",
+			content: {
+				"application/json": {
+					schema: getEquipmentResponseSchema,
+				},
+			},
+		},
+		404: {
+			description: "Not Found",
+			content: {
+				"application/json": {
+					schema: errorResponseSchema,
+				},
+			},
+		},
+		500: {
+			description: "Internal Server Error",
+			content: {
+				"application/json": {
+					schema: errorResponseSchema,
+				},
+			},
+		},
+	},
+});
 
 export const getEquipmentsRoute = createRoute({
 	tags: ["equipments"],
@@ -90,6 +127,7 @@ export const putEquipmentsRoute = createRoute({
 	method: "put",
 	description: "備品編集",
 	request: {
+		params: equipmentPathParamsSchema,
 		body: {
 			required: true,
 			content: {
