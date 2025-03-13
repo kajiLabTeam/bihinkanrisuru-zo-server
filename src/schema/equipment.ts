@@ -94,7 +94,7 @@ export const createEquipmentRequestSchema = z.object({
 		description: "機器の名称",
 		example: "togawaさんのM3 MacBook Pro",
 	}),
-	purchase_date: unixTimestampSchema.optional().openapi({
+	purchase_at: unixTimestampSchema.optional().openapi({
 		description: "購入日",
 		example: 1633824000000,
 	}),
@@ -123,7 +123,7 @@ export const putEquipmentsRequestSchema = z.object({
 		description: "機器の貸出状態 (貸出中など)",
 		example: "貸出中",
 	}),
-	purchase_date: unixTimestampSchema.optional().openapi({
+	purchase_at: unixTimestampSchema.optional().openapi({
 		description: "購入日 (UNIXタイムスタンプ)",
 		example: 1633824000000,
 	}),

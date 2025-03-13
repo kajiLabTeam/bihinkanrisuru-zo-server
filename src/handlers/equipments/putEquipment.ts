@@ -24,7 +24,7 @@ export const putEquipmentHandler: RouteHandler<
 	const response: PutEquipmentsResponse = {
 		asset_id: requestData.asset_id,
 		name: requestData.name,
-		purchase_date: requestData.purchase_date,
+		purchase_at: requestData.purchase_at,
 		place: requestData.place,
 	};
 

@@ -33,9 +33,7 @@ export const createEquipmentHandler: RouteHandler<
 			requestData.asset_id,
 			requestData.name,
 			requestData.place,
-			requestData.purchase_date
-				? new Date(requestData.purchase_date)
-				: undefined,
+			requestData.purchase_at ? new Date(requestData.purchase_at) : undefined,
 		);
 		await insertEquipmentTags(
 			equipmentRecord.id,

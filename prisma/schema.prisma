@@ -40,7 +40,7 @@ model Equipment {
   name         String          @unique @db.VarChar(256)
   place        String          @db.VarChar(256)
   status       EquipmentStatus @default(AVAILABLE)
-  purchaseDate DateTime        @default(now()) @map("purchase_date") @db.Timestamp(0)
+  purchaseDate DateTime        @default(now()) @map("purchase_at") @db.Timestamp(0)
   createdAt    DateTime        @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt    DateTime        @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
   deletedAt    DateTime?       @map("deleted_at") @db.Timestamp(0)
