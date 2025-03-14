@@ -6,9 +6,14 @@ export const tagSchema = z.object({
 	name: z.string().openapi({ example: "PC" }),
 });
 
-export const getTagsQuerySchema = getQuerySchema.openapi({
-	description: "タグの取得クエリ",
-});
+export const getTagsQuerySchema = getQuerySchema.merge(
+	z.object({
+		name: z.string().default("").openapi({
+			description: "タグ名",
+			example: "PC",
+		}),
+	}),
+);
 
 export const getTagsResponseSchema = z.object({
 	tags: z.array(

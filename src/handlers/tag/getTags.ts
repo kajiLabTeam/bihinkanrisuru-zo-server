@@ -7,11 +7,11 @@ import { type GetTagsResponse, getTagsQuerySchema } from "~/schema/tag";
 export const getTagsHandler: RouteHandler<typeof getTagsRoute> = async (
 	c: Context,
 ) => {
-	const { limit, offset, sort, order } = getTagsQuerySchema.parse(
+	const { name, limit, offset, sort, order } = getTagsQuerySchema.parse(
 		c.req.query(),
 	);
 
-	const tagRecords = await getTags(limit, offset, sort, order);
+	const tagRecords = await getTags(name, limit, offset, sort, order);
 
 	return c.json(
 		{

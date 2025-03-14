@@ -3,12 +3,18 @@ import { prismaClient } from "~/lib/prisma";
 import { ModelError } from "./errors";
 
 export const getTags = async (
+	name: string,
 	limit: number,
 	offset: number,
 	sort: string,
 	order: string,
 ): Promise<Tag[]> => {
 	return await prismaClient.tag.findMany({
+		where: {
+			name: {
+				contains: name,
+			},
+		},
 		take: limit,
 		skip: offset,
 		orderBy: {
