@@ -137,8 +137,6 @@ export const putEquipmentsRequestSchema = z.object({
 	}),
 });
 
-export const putEquipmentsResponseSchema = equipmentSchema;
-
 export const equipmentPathParamsSchema = z.object({
 	id: z.string().openapi({
 		description: "DBに登録された機器ID",
@@ -162,4 +160,3 @@ export type CreateEquipmentResponse = z.infer<
 	typeof createEquipmentResponseSchema
 >;
 export type PutEquipmentsRequest = z.infer<typeof putEquipmentsRequestSchema>;
-export type PutEquipmentsResponse = z.infer<typeof putEquipmentsResponseSchema>;

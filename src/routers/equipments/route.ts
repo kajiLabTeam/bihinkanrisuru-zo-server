@@ -8,7 +8,6 @@ import {
 	getEquipmentsQuerySchema,
 	getEquipmentsResponseSchema,
 	putEquipmentsRequestSchema,
-	putEquipmentsResponseSchema,
 } from "~/schema/equipment";
 
 import { errorResponseSchema } from "~/schema/common/error";
@@ -142,7 +141,7 @@ export const putEquipmentsRoute = createRoute({
 			description: "OK",
 			content: {
 				"application/json": {
-					schema: putEquipmentsResponseSchema,
+					schema: statusMessageResponseSchema,
 				},
 			},
 		},
