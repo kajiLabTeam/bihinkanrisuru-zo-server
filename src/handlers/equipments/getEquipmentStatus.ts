@@ -6,8 +6,7 @@ import type { GetEquipmentStatusResponse } from "~/schema/equipment";
 
 export const getEquipmentStatusHandler: RouteHandler<
 	typeof getEquipmentStatusRoute
-> = async (c: Context) => {
-	console.log("getEquipmentStatusHandler");
+> = (c: Context) => {
 	const equipmentStatus = getAllEquipmentStatuses();
 
 	return c.json(
