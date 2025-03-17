@@ -5,6 +5,7 @@ import {
 	createEquipmentResponseSchema,
 	equipmentPathParamsSchema,
 	getEquipmentResponseSchema,
+	getEquipmentStatusResponseSchema,
 	getEquipmentsQuerySchema,
 	getEquipmentsResponseSchema,
 	putEquipmentsRequestSchema,
@@ -63,6 +64,31 @@ export const getEquipmentsRoute = createRoute({
 			content: {
 				"application/json": {
 					schema: getEquipmentsResponseSchema,
+				},
+			},
+		},
+		500: {
+			description: "Internal Server Error",
+			content: {
+				"application/json": {
+					schema: errorResponseSchema,
+				},
+			},
+		},
+	},
+});
+
+export const getEquipmentStatusRoute = createRoute({
+	tags: ["equipments"],
+	path: "/status",
+	method: "get",
+	description: "備品状態の一覧を取得 ",
+	responses: {
+		200: {
+			description: "OK",
+			content: {
+				"application/json": {
+					schema: getEquipmentStatusResponseSchema,
 				},
 			},
 		},

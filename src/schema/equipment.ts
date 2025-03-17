@@ -85,6 +85,15 @@ export const getEquipmentsResponseSchema = z.object({
 	equipments: z.array(equipmentSchema),
 });
 
+export const getEquipmentStatusResponseSchema = z.object({
+	status: z.array(
+		z.string().openapi({
+			description: "機器の貸出状態 (貸出中など)",
+			example: "BORROWED",
+		}),
+	),
+});
+
 export const createEquipmentRequestSchema = z.object({
 	asset_id: z.string().openapi({
 		description: "資産管理ID",
@@ -153,6 +162,9 @@ export const borrowEquipmentRequestSchema = z.object({
 
 export type GetEquipmentResponse = z.infer<typeof getEquipmentResponseSchema>;
 export type GetEquipmentsResponse = z.infer<typeof getEquipmentsResponseSchema>;
+export type GetEquipmentStatusResponse = z.infer<
+	typeof getEquipmentStatusResponseSchema
+>;
 export type CreateEquipmentRequest = z.infer<
 	typeof createEquipmentRequestSchema
 >;

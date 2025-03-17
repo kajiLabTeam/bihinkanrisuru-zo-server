@@ -1,4 +1,4 @@
-import type { Equipment, EquipmentStatus } from "@prisma/client";
+import { type Equipment, EquipmentStatus } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { prismaClient } from "~/lib/prisma";
 import { ModelError } from "./errors";
@@ -26,6 +26,10 @@ export const getEquipmentById = async (
 			id,
 		},
 	});
+};
+
+export const getAllEquipmentStatuses = (): EquipmentStatus[] => {
+	return Object.values(EquipmentStatus);
 };
 
 export const insertEquipment = async (
