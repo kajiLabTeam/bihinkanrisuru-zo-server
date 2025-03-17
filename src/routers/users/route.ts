@@ -1,14 +1,12 @@
 import { createRoute } from "@hono/zod-openapi";
-import { errorResponseSchema } from "~/schema/error";
+import { errorResponseSchema } from "~/schema/common/error";
+import { statusMessageResponseSchema } from "~/schema/common/message";
 import {
-	approveUserPathParamSchema,
-	approveUserResponseSchema,
 	createUserRequestSchema,
 	createUserResponseSchema,
 	getUsersQuerySchema,
 	getUsersResponseSchema,
-	rejectUserPathParamSchema,
-	rejectUserResponseSchema,
+	userPathParamSchema,
 } from "~/schema/user";
 
 export const getUsersRoute = createRoute({
@@ -88,14 +86,14 @@ export const approveUserRoute = createRoute({
 	method: "put",
 	description: "ユーザを承認",
 	request: {
-		params: approveUserPathParamSchema,
+		params: userPathParamSchema,
 	},
 	responses: {
 		201: {
 			description: "OK",
 			content: {
 				"application/json": {
-					schema: approveUserResponseSchema,
+					schema: statusMessageResponseSchema,
 				},
 			},
 		},
@@ -124,14 +122,14 @@ export const rejectUserRoute = createRoute({
 	method: "put",
 	description: "ユーザを拒否",
 	request: {
-		params: rejectUserPathParamSchema,
+		params: userPathParamSchema,
 	},
 	responses: {
 		201: {
 			description: "OK",
 			content: {
 				"application/json": {
-					schema: rejectUserResponseSchema,
+					schema: statusMessageResponseSchema,
 				},
 			},
 		},

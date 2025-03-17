@@ -1,6 +1,6 @@
 import type { Context } from "hono";
 import type { z } from "zod";
-import type { ErrorResponse } from "../schema/error";
+import type { ErrorResponse } from "../schema/common/error";
 
 export const validateRequestBody = async <T>(
 	c: Context,

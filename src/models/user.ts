@@ -16,6 +16,14 @@ export const getUsers = async (
 	});
 };
 
+export const getUserById = async (id: string): Promise<User | null> => {
+	return await prismaClient.user.findUnique({
+		where: {
+			id,
+		},
+	});
+};
+
 export const insertUser = async (id: string, name: string): Promise<User> => {
 	return await prismaClient.user.upsert({
 		where: { id },
@@ -26,18 +34,11 @@ export const insertUser = async (id: string, name: string): Promise<User> => {
 
 export const updateUserById = async (
 	id: string,
-	name?: string,
-	status?: UserStatus,
+	updateData: {
+		name?: string;
+		status?: UserStatus;
+	},
 ): Promise<User> => {
-	const updateData: { name?: string; status?: UserStatus } = {};
-
-	if (name !== undefined) {
-		updateData.name = name;
-	}
-	if (status !== undefined) {
-		updateData.status = status;
-	}
-
 	return await prismaClient.user.update({
 		where: {
 			id,
