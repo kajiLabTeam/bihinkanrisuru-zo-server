@@ -72,3 +72,11 @@ export const updateEquipmentById = async (
 		data: updateData,
 	});
 };
+
+export const deleteEquipmentById = async (id: string): Promise<Equipment> => {
+	return await prismaClient.equipment.delete({
+		where: {
+			id,
+		},
+	});
+};

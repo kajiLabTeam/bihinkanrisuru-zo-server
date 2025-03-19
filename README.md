@@ -16,21 +16,28 @@ yarn install
 
 ```.env
 # db container
-POSTGRES_CONTAINER_NAME=bihinkanrisuruzo-server-db
-POSTGRES_DB=bihinkanrisuruzo-server
+POSTGRES_CONTAINER_NAME=bihinkanrisuruzo-db
+POSTGRES_DB=bihinkanrisuruzo-db
 POSTGRES_USER=user
 POSTGRES_PASSWORD=password
-POSTGRES_HOST_AUTH_METHOD=trust
 POSTGRES_PORT=5432
 
+# server container
+SERVER_CONTAINER_NAME=bihinkanrisuruzo-server
+SERVER_PORT=8000
+
 # prisma
-DATABASE_URL=postgresql://user:password@localhost:5432/bihinkanrisuruzo-server?schema=public
+DATABASE_URL=postgresql://user:password@bihinkanrisuruzo-db:5432/bihinkanrisuruzo-db?schema=public
 ```
 
 ### 1. DB の立ち上げ・マイグレーション・デモデータ挿入
 
 ```shell
 make up
+```
+
+```shell
+make connect-server
 ```
 
 ```shell
