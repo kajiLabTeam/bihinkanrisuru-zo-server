@@ -301,3 +301,39 @@ export const returnEquipmentRoute = createRoute({
 		},
 	},
 });
+
+export const deleteEquipmentRoute = createRoute({
+	tags: ["equipments"],
+	path: "/{id}",
+	method: "delete",
+	description: "備品を削除する",
+	request: {
+		params: equipmentPathParamsSchema,
+	},
+	responses: {
+		201: {
+			description: "OK",
+			content: {
+				"application/json": {
+					schema: statusMessageResponseSchema,
+				},
+			},
+		},
+		404: {
+			description: "Not Found",
+			content: {
+				"application/json": {
+					schema: errorResponseSchema,
+				},
+			},
+		},
+		500: {
+			description: "Internal Server Error",
+			content: {
+				"application/json": {
+					schema: errorResponseSchema,
+				},
+			},
+		},
+	},
+});
