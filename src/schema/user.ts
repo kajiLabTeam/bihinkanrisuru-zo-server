@@ -29,6 +29,10 @@ export const getUsersQuerySchema = getQuerySchema.merge(
 	}),
 );
 
+export const getUserResponseSchema = userSchema.openapi({
+	description: "ユーザー情報",
+});
+
 export const getUsersResponseSchema = z.object({
 	users: z.array(
 		userSchema.openapi({
@@ -59,5 +63,6 @@ export const userPathParamSchema = z.object({
 	}),
 });
 
+export type GetUserResponse = z.infer<typeof getUserResponseSchema>;
 export type GetUsersResponse = z.infer<typeof getUsersResponseSchema>;
 export type CreateUserResponse = z.infer<typeof createUserResponseSchema>;
