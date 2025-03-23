@@ -1,5 +1,7 @@
 # 備品管理する蔵バックエンド
 
+> デプロイ先：https://bihinkanrisuruzo-api-server.kajilab.dev
+
 ## 実行方法
 
 ### 0. 準備
