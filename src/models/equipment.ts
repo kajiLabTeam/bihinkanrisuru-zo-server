@@ -8,10 +8,10 @@ export const getEquipments = async (): Promise<Equipment[]> => {
 
 export const editEquipment = async (
   id: string,
-  assetId: string,
-  name: string,
-  purchaseDate: Date,
-  place: string,
+  assetId: string | undefined,
+  name: string | undefined,
+  purchaseDate: Date | undefined,
+  place: string | undefined,
 ): Promise<Equipment> => {
   const editedEquipment = await prismaClient.equipment.update({
     where: { id: id },
@@ -26,7 +26,7 @@ export const editEquipment = async (
 };
 
 export const createEquipment = async (
-  assetId: string,
+  assetId: string | undefined,
   name: string,
   status: EquipmentStatus,
   purchaseDate: Date,
