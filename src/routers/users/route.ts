@@ -4,10 +4,47 @@ import { statusMessageResponseSchema } from "~/schema/common/message";
 import {
 	createUserRequestSchema,
 	createUserResponseSchema,
+	getUserResponseSchema,
 	getUsersQuerySchema,
 	getUsersResponseSchema,
 	userPathParamSchema,
 } from "~/schema/user";
+
+export const getUserRoute = createRoute({
+	tags: ["users"],
+	path: "/{id}",
+	method: "get",
+	description: "ユーザーを取得 ",
+	request: {
+		query: getUsersQuerySchema,
+	},
+	responses: {
+		200: {
+			description: "OK",
+			content: {
+				"application/json": {
+					schema: getUserResponseSchema,
+				},
+			},
+		},
+		404: {
+			description: "Not Found",
+			content: {
+				"application/json": {
+					schema: errorResponseSchema,
+				},
+			},
+		},
+		500: {
+			description: "Internal Server Error",
+			content: {
+				"application/json": {
+					schema: errorResponseSchema,
+				},
+			},
+		},
+	},
+});
 
 export const getUsersRoute = createRoute({
 	tags: ["users"],
