@@ -23,7 +23,7 @@ export const putEquipmentHandler: RouteHandler<
 	// パスパラメータの取得
 	const equipmentId = c.req.param("id");
 	// tagId更新
-	const editedTags = await insertEquipmentTags(
+	const _editTags = await insertEquipmentTags(
 		equipmentId,
 		validationResult.data.tag_ids,
 	);
