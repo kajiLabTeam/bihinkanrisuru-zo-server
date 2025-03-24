@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { getQuerySchema } from "./common/query";
+import { UserStatusEnum } from "./common/status";
 
 const userSchema = z.object({
 	id: z.string().openapi({
@@ -10,7 +11,7 @@ const userSchema = z.object({
 		description: "ユーザー名",
 		example: "tada",
 	}),
-	status: z.string().optional().openapi({
+	status: UserStatusEnum.optional().openapi({
 		description: "ステータス",
 		example: "PENDING",
 	}),
@@ -50,6 +51,10 @@ export const createUserRequestSchema = z.object({
 		description: "ユーザー名",
 		example: "tada",
 	}),
+});
+
+export const putUserRequestSchema = userSchema.omit({ id: true }).openapi({
+	description: "ユーザー情報（IDなし）",
 });
 
 export const createUserResponseSchema = userSchema.openapi({

@@ -7,6 +7,7 @@ import {
 	getUserResponseSchema,
 	getUsersQuerySchema,
 	getUsersResponseSchema,
+	putUserRequestSchema,
 	userPathParamSchema,
 } from "~/schema/user";
 
@@ -95,6 +96,50 @@ export const createUserRoute = createRoute({
 			content: {
 				"application/json": {
 					schema: createUserResponseSchema,
+				},
+			},
+		},
+		400: {
+			description: "Bad Request",
+			content: {
+				"application/json": {
+					schema: errorResponseSchema,
+				},
+			},
+		},
+		500: {
+			description: "Internal Server Error",
+			content: {
+				"application/json": {
+					schema: errorResponseSchema,
+				},
+			},
+		},
+	},
+});
+
+export const putUserRoute = createRoute({
+	tags: ["users"],
+	path: "/{id}",
+	method: "put",
+	description: "備品編集",
+	request: {
+		params: statusMessageResponseSchema,
+		body: {
+			required: true,
+			content: {
+				"application/json": {
+					schema: putUserRequestSchema,
+				},
+			},
+		},
+	},
+	responses: {
+		201: {
+			description: "OK",
+			content: {
+				"application/json": {
+					schema: statusMessageResponseSchema,
 				},
 			},
 		},
