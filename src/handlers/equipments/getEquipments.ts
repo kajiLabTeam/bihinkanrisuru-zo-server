@@ -51,6 +51,7 @@ export const getEquipmentsHandler: RouteHandler<
 				? {
 						id: userRecord.id,
 						name: userRecord.name,
+						status: userRecord.status,
 						borrowed_at: equipmentBorrowLogRecord!.borrowedAt.getTime(),
 					}
 				: null,
