@@ -58,6 +58,7 @@ export const getEquipmentHandler: RouteHandler<
 						id: userRecord.id,
 						name: userRecord.name,
 						borrowed_at: equipmentBorrowLogRecord!.borrowedAt.getTime(),
+						status: userRecord.status,
 					}
 				: null,
 			tags: tagRecords.map((tag) => ({
