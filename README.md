@@ -1,6 +1,6 @@
 # 備品管理する蔵バックエンド
 
-
+> デプロイ先：https://bihinkanrisuruzo-api-server.kajilab.dev
 
 ## 実行方法
 
@@ -18,46 +18,57 @@ yarn install
 
 ```.env
 # db container
-POSTGRES_CONTAINER_NAME=bihinkanrisuruzo-server-db
-POSTGRES_DB=bihinkanrisuruzo-server
+POSTGRES_CONTAINER_NAME=bihinkanrisuruzo-db
+POSTGRES_DB=bihinkanrisuruzo-db
 POSTGRES_USER=user
 POSTGRES_PASSWORD=password
-POSTGRES_HOST_AUTH_METHOD=trust
 POSTGRES_PORT=5432
 
+# server container
+SERVER_CONTAINER_NAME=bihinkanrisuruzo-server
+SERVER_PORT=8000
+
 # prisma
-DATABASE_URL=postgresql://user:password@localhost:5432/bihinkanrisuruzo-server?schema=public
+DATABASE_URL=postgresql://user:password@bihinkanrisuruzo-db:5432/bihinkanrisuruzo-db?schema=public
 ```
 
-### 2. DBの立ち上げ・マイグレーション
+### 1. DB の立ち上げ・マイグレーション・デモデータ挿入
 
 ```shell
 make up
 ```
 
 ```shell
-yarn prisma migrate dev --name init
+make connect-server
 ```
 
-### 3. サーバの起動
+```shell
+yarn prisma:init
+```
+
+```shell
+yarn seed
+```
+
+### 2. サーバの起動
 
 ```shell
 yarn dev
 ```
 
-### 4. サーバにアクセス
+### 3. サーバにアクセス
 
-`http://localhost:3000/ui`にアクセスすると API ドキュメントが閲覧できます
+`http://localhost:3000/docs`にアクセスすると API ドキュメントが閲覧できます
 
 ## その他
 
-### DBに接続したい場合
+### DB に接続したい場合
 
 ```shell
 make connect-db
 ```
 
-### prisma studioの起動
+### prisma studio の起動
 
 ```shell
 yarn prisma studio

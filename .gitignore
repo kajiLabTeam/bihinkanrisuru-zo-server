@@ -32,3 +32,6 @@ gcloudCredentials.json
 
 # build
 dist/
+
+# db
+docker/db/data/
