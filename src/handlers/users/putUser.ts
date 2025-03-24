@@ -1,5 +1,6 @@
 import type { RouteHandler } from "@hono/zod-openapi";
 import type { Context } from "hono";
+import { updateUserById } from "~/models/user";
 import type { putUserRoute } from "~/routers/users/route";
 import type { StatusMessageResponse } from "~/schema/common/message";
 import { putUserRequestSchema, userPathParamSchema } from "~/schema/user";
@@ -17,11 +18,11 @@ export const putUserHandler: RouteHandler<typeof putUserRoute> = async (
 		return c.json(validationResult.error, 400);
 	}
 
-	// const requestData = validationResult.data;
-	// const _user = await updateUserById(userId, {
-	// 	name: requestData.name,
-	// 	status: requestData.status,
-	// });
+	const requestData = validationResult.data;
+	const _user = await updateUserById(userId, {
+		name: requestData.name,
+		status: requestData.status,
+	});
 
 	return c.json(
 		{

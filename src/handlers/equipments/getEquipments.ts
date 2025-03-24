@@ -15,7 +15,7 @@ import {
 export const getEquipmentsHandler: RouteHandler<
 	typeof getEquipmentsRoute
 > = async (c: Context) => {
-	const { limit, offset, sort, order } = getEquipmentsQuerySchema.parse(
+	const { search, limit, offset, sort, order } = getEquipmentsQuerySchema.parse(
 		c.req.query(),
 	);
 
@@ -23,7 +23,13 @@ export const getEquipmentsHandler: RouteHandler<
 		equipments: [],
 	};
 
-	const equipmentRecords = await getEquipments(limit, offset, sort, order);
+	const equipmentRecords = await getEquipments(
+		limit,
+		offset,
+		sort,
+		order,
+		search,
+	);
 
 	const equipmentPromises = equipmentRecords.map(async (equipment) => {
 		const equipmentTagRecords = await getEquipmentTagsByEquipmentId(

@@ -19,11 +19,7 @@ const userSchema = z.object({
 
 export const getUsersQuerySchema = getQuerySchema.merge(
 	z.object({
-		id: z.string().optional().openapi({
-			description: "学生証のバーコードから読み取れるユーザーID",
-			example: "20k23075",
-		}),
-		name: z.string().optional().openapi({
+		search: z.string().optional().openapi({
 			description: "ユーザー名",
 			example: "tada",
 		}),
