@@ -4,79 +4,79 @@ import { prismaClient } from "~/lib/prisma";
 import { ModelError } from "./errors";
 
 export const getEquipments = async (
-  limit: number,
-  offset: number,
-  sort: string,
-  order: string,
+	limit: number,
+	offset: number,
+	sort: string,
+	order: string,
 ): Promise<Equipment[]> => {
-  return await prismaClient.equipment.findMany({
-    take: limit,
-    skip: offset,
-    orderBy: {
-      [sort]: order,
-    },
-  });
+	return await prismaClient.equipment.findMany({
+		take: limit,
+		skip: offset,
+		orderBy: {
+			[sort]: order,
+		},
+	});
 };
 
 export const getEquipmentById = async (
-  id: string,
+	id: string,
 ): Promise<Equipment | null> => {
-  return await prismaClient.equipment.findUnique({
-    where: {
-      id,
-    },
-  });
+	return await prismaClient.equipment.findUnique({
+		where: {
+			id,
+		},
+	});
 };
 
 export const getAllEquipmentStatuses = (): EquipmentStatus[] => {
-  return Object.values(EquipmentStatus);
+	return Object.values(EquipmentStatus);
 };
 
 export const insertEquipment = async (
-  assetId: string,
-  name: string,
-  place: string,
-  purchaseDate?: Date,
+	assetId: string,
+	name: string,
+	place: string,
+	purchaseDate?: Date,
 ): Promise<Equipment> => {
-  try {
-    return await prismaClient.equipment.create({
-      data: {
-        assetId,
-        name,
-        place,
-        purchaseDate,
-      },
-    });
-  } catch (e) {
-    if (e instanceof PrismaClientKnownRequestError && e.code === "P2002") {
-      throw new ModelError("EquipmentNameIsAlreadyUsed");
-    }
-    throw e;
-  }
+	try {
+		return await prismaClient.equipment.create({
+			data: {
+				assetId,
+				name,
+				place,
+				purchaseDate,
+			},
+		});
+	} catch (e) {
+		if (e instanceof PrismaClientKnownRequestError && e.code === "P2002") {
+			throw new ModelError("EquipmentNameIsAlreadyUsed");
+		}
+		throw e;
+	}
 };
 
 export const updateEquipmentById = async (
-  id: string,
-  updateData: {
-    assetId?: string;
-    name?: string;
-    place?: string;
-    status?: EquipmentStatus;
-    purchaseDate?: Date;
-  },
+	id: string,
+	updateData: {
+		assetId?: string;
+		name?: string;
+		place?: string;
+		status?: EquipmentStatus;
+		purchaseDate?: Date;
+	},
 ): Promise<Equipment> => {
-  return await prismaClient.equipment.update({
-    where: {
-      id,
-    },
-    data: updateData,
-  });
+	return await prismaClient.equipment.update({
+		where: {
+			id,
+		},
+		data: updateData,
+	});
 };
 
 export const deleteEquipmentById = async (id: string): Promise<Equipment> => {
-  return await prismaClient.equipment.delete({
-    where: {
-      id,
-    },
-  });
+	return await prismaClient.equipment.delete({
+		where: {
+			id,
+		},
+	});
 };
