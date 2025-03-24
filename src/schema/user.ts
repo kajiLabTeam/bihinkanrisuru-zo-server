@@ -53,8 +53,15 @@ export const createUserRequestSchema = z.object({
 	}),
 });
 
-export const putUserRequestSchema = userSchema.omit({ id: true }).openapi({
-	description: "ユーザー情報（IDなし）",
+export const putUserRequestSchema = z.object({
+	name: z.string().openapi({
+		description: "ユーザー名",
+		example: "tada",
+	}),
+	status: UserStatusEnum.optional().openapi({
+		description: "ステータス",
+		example: "PENDING",
+	}),
 });
 
 export const createUserResponseSchema = userSchema.openapi({
