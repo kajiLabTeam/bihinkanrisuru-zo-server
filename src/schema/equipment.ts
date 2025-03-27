@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { getQuerySchema } from "./common/query";
+import { EquipmentStatusEnum, UserStatusEnum } from "./common/status";
 import { unixTimestampSchema } from "./common/time";
 import { tagSchema } from "./tag";
 
@@ -16,9 +17,9 @@ const equipmentSchema = z.object({
 		description: "機器の名称",
 		example: "ノートPC",
 	}),
-	status: z.string().openapi({
+	status: EquipmentStatusEnum.openapi({
 		description: "機器の貸出状態 (貸出中など)",
-		example: "BORROWED",
+		example: "AVAILABLE",
 	}),
 	place: z.string().openapi({
 		description: "機器の保管場所",
@@ -42,7 +43,7 @@ const equipmentSchema = z.object({
 				description: "ユーザー名",
 				example: "tada",
 			}),
-			status: z.string().optional().openapi({
+			status: UserStatusEnum.openapi({
 				description: "ステータス",
 				example: "APPROVED",
 			}),
@@ -74,7 +75,7 @@ export const getEquipmentResponseSchema = equipmentSchema;
 
 export const getEquipmentsQuerySchema = getQuerySchema.merge(
 	z.object({
-		name: z.string().optional().openapi({
+		search: z.string().optional().openapi({
 			description: "備品名",
 			example: "ノートPC",
 		}),
@@ -128,9 +129,9 @@ export const putEquipmentsRequestSchema = z.object({
 		description: "機器の名称",
 		example: "ノートPC",
 	}),
-	status: z.string().optional().openapi({
+	status: EquipmentStatusEnum.optional().openapi({
 		description: "機器の貸出状態 (貸出中など)",
-		example: "貸出中",
+		example: "AVAILABLE",
 	}),
 	purchase_at: unixTimestampSchema.optional().openapi({
 		description: "購入日 (UNIXタイムスタンプ)",

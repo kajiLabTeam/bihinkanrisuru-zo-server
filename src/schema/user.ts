@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { getQuerySchema } from "./common/query";
+import { UserStatusEnum } from "./common/status";
 
 const userSchema = z.object({
 	id: z.string().openapi({
@@ -10,7 +11,7 @@ const userSchema = z.object({
 		description: "ユーザー名",
 		example: "tada",
 	}),
-	status: z.string().optional().openapi({
+	status: UserStatusEnum.optional().openapi({
 		description: "ステータス",
 		example: "PENDING",
 	}),
@@ -18,11 +19,7 @@ const userSchema = z.object({
 
 export const getUsersQuerySchema = getQuerySchema.merge(
 	z.object({
-		id: z.string().optional().openapi({
-			description: "学生証のバーコードから読み取れるユーザーID",
-			example: "20k23075",
-		}),
-		name: z.string().optional().openapi({
+		search: z.string().optional().openapi({
 			description: "ユーザー名",
 			example: "tada",
 		}),
@@ -49,6 +46,17 @@ export const createUserRequestSchema = z.object({
 	name: z.string().openapi({
 		description: "ユーザー名",
 		example: "tada",
+	}),
+});
+
+export const putUserRequestSchema = z.object({
+	name: z.string().openapi({
+		description: "ユーザー名",
+		example: "tada",
+	}),
+	status: UserStatusEnum.optional().openapi({
+		description: "ステータス",
+		example: "PENDING",
 	}),
 });
 
