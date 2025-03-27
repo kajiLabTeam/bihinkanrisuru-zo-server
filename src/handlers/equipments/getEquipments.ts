@@ -18,6 +18,7 @@ export const getEquipmentsHandler: RouteHandler<
 	const { search, limit, offset, sort, order } = getEquipmentsQuerySchema.parse(
 		c.req.query(),
 	);
+	console.log(search, limit, offset, sort, order);
 
 	const response: GetEquipmentsResponse = {
 		equipments: [],
@@ -30,6 +31,8 @@ export const getEquipmentsHandler: RouteHandler<
 		order,
 		search,
 	);
+
+	console.log(equipmentRecords);
 
 	const equipmentPromises = equipmentRecords.map(async (equipment) => {
 		const equipmentTagRecords = await getEquipmentTagsByEquipmentId(

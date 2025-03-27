@@ -16,7 +16,7 @@ export const getEquipments = async (
 		where: search
 			? {
 					OR: [
-						{ id: { contains: search, mode: "insensitive" } },
+						{ assetId: { contains: search, mode: "insensitive" } },
 						{ name: { contains: search, mode: "insensitive" } },
 					],
 				}
