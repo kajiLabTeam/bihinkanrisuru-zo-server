@@ -19,11 +19,7 @@ const userSchema = z.object({
 
 export const getUsersQuerySchema = getQuerySchema.merge(
 	z.object({
-		id: z.string().optional().openapi({
-			description: "学生証のバーコードから読み取れるユーザーID",
-			example: "20k23075",
-		}),
-		name: z.string().optional().openapi({
+		search: z.string().optional().openapi({
 			description: "ユーザー名",
 			example: "tada",
 		}),
@@ -53,8 +49,15 @@ export const createUserRequestSchema = z.object({
 	}),
 });
 
-export const putUserRequestSchema = userSchema.omit({ id: true }).openapi({
-	description: "ユーザー情報（IDなし）",
+export const putUserRequestSchema = z.object({
+	name: z.string().openapi({
+		description: "ユーザー名",
+		example: "tada",
+	}),
+	status: UserStatusEnum.optional().openapi({
+		description: "ステータス",
+		example: "PENDING",
+	}),
 });
 
 export const createUserResponseSchema = userSchema.openapi({

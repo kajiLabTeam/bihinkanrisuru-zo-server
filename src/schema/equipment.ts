@@ -75,7 +75,7 @@ export const getEquipmentResponseSchema = equipmentSchema;
 
 export const getEquipmentsQuerySchema = getQuerySchema.merge(
 	z.object({
-		name: z.string().optional().openapi({
+		search: z.string().optional().openapi({
 			description: "備品名",
 			example: "ノートPC",
 		}),

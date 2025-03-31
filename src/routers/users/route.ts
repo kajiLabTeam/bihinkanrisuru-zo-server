@@ -122,9 +122,9 @@ export const putUserRoute = createRoute({
 	tags: ["users"],
 	path: "/{id}",
 	method: "put",
-	description: "備品編集",
+	description: "ユーザ編集",
 	request: {
-		params: statusMessageResponseSchema,
+		params: userPathParamSchema,
 		body: {
 			required: true,
 			content: {

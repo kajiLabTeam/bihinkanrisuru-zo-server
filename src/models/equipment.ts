@@ -8,10 +8,19 @@ export const getEquipments = async (
 	offset: number,
 	sort: string,
 	order: string,
+	search?: string,
 ): Promise<Equipment[]> => {
 	return await prismaClient.equipment.findMany({
 		take: limit,
 		skip: offset,
+		where: search
+			? {
+					OR: [
+						{ assetId: { contains: search, mode: "insensitive" } },
+						{ name: { contains: search, mode: "insensitive" } },
+					],
+				}
+			: undefined,
 		orderBy: {
 			[sort]: order,
 		},
