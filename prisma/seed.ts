@@ -41,7 +41,7 @@ async function main() {
 		},
 	});
 
-	const equipmentBorrowLog1 = await prisma.equipmentBorrowLog.create({
+	const equipmentBorrowLog1 = await prisma.equipmentBorrowLogs.create({
 		data: {
 			equipmentId: "cm8i9o4wv0000qn13dvccw2f3",
 			userId: "21k1116",
