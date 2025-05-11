@@ -40,7 +40,9 @@ export const createEquipmentHandler: RouteHandler<
 			tagRecords.map((tag) => tag.id),
 		);
 
-		// TODO: QRコード発行のAPIを呼び出す
+		fetch(
+			`https://bihinkanrisuruzo-tepra-server.kajilab.dev/equipments/${equipmentRecord.id}/`,
+		);
 
 		return c.json(
 			{

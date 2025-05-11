@@ -10,9 +10,7 @@ export const putUserHandler: RouteHandler<typeof putUserRoute> = async (
 	c: Context,
 ) => {
 	const userId = userPathParamSchema.parse(c.req.param()).id;
-	console.log(userId);
 	const validationResult = await validateRequestBody(c, putUserRequestSchema);
-	console.log(validationResult);
 
 	if (!validationResult.success) {
 		return c.json(validationResult.error, 400);
